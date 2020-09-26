@@ -104,6 +104,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="music_storage_schema.json" />
+    <None Include="muisc_storage.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -121,4 +123,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Runtime.WindowsRuntime.4.6.0\build\net461\System.Runtime.WindowsRuntime.targets'))" />
   </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties music_3storage_3schema_1json__JsonSchema="https://json-schema.org/draft-04/schema" muisc_3storage_1json__JsonSchema="music_storage_schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
