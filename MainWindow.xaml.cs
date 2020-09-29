@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,33 @@ namespace Orpheus
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static RoutedCommand ScanCmd = new RoutedCommand();
+        public static RoutedCommand OpenFileCmd = new RoutedCommand();
+        public static RoutedCommand OpenFolderCmd = new RoutedCommand();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("TODO: Scan library for changes.", "Orpheus", MessageBoxButton.OK);
+        }
+
+        private void OpenFileCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("TODO: Add file to library.", "Orpheus", MessageBoxButton.OK);
+        }
+
+        private void OpenFolderCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("TODO: Add folder to library.", "Orpheus", MessageBoxButton.OK);
+        }
+
+        private void CloseCmdExecuted(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
