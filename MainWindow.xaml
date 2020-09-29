@@ -8,7 +8,11 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Title="Orpheus" Height="720" Width="1280">
+        Title="Orpheus"
+        Width="1280"
+        Height="720"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.ScanCmd}" Executed="ScanCmdExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenFileCmd}" Executed="OpenFileCmdExecuted" />
@@ -21,7 +25,7 @@
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{x:Static local:MainWindow.OpenFolderCmd}" />
         <KeyBinding Modifiers="Ctrl" Key="W" Command="Close" />
     </Window.InputBindings>
-    <DockPanel>
+    <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Scan library for changes" Command="{x:Static local:MainWindow.ScanCmd}" InputGestureText="Ctrl+S" />
@@ -32,33 +36,30 @@
                 <MenuItem Header="_Exit" Command="Close" InputGestureText="Ctrl+W" />
             </MenuItem>
         </Menu>
-        <ScrollViewer>
-            <Grid Background="{DynamicResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.Resources>
-                    <sys:Double x:Key="TileHeight">150</sys:Double>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="1" Grid.Column="1" MinHeight="{StaticResource TileHeight}" Background="DarkGray" Margin="6" />
-                <Grid Grid.Row="1" Grid.Column="2" MinHeight="{StaticResource TileHeight}" Background="LightGray" Margin="6" />
-                <Grid Grid.Row="2" Grid.Column="1" MinHeight="{StaticResource TileHeight}" Background="LightGray" Margin="6" />
-                <Grid Grid.Row="2" Grid.Column="2" MinHeight="{StaticResource TileHeight}" Background="DarkGray" Margin="6" />
-                <Grid x:Name="SourceElement" Grid.Row="1" Grid.Column="0" MinHeight="{StaticResource TileHeight}" Background="{DynamicResource SystemControlBackgroundAccentBrush}" Margin="5" Grid.RowSpan="2" MinWidth="250" />
-
-                <Grid Grid.Row="3" Grid.ColumnSpan="3" Margin="6,12">
-                    <TextBlock TextWrapping="Wrap" Style="{DynamicResource BodyTextBlockStyle}" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                </Grid>
-            </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
+            <ListView HorizontalAlignment="Stretch"
+                VerticalAlignment="Top" Width="1280"
+                Name="Playlist">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name"
+                                DisplayMemberBinding="{Binding Name}"
+                                Width="384"/>
+                        <GridViewColumn Header="Artist"
+                                DisplayMemberBinding="{Binding Artist}"
+                                Width="256"/>
+                        <GridViewColumn Header="Album"
+                                DisplayMemberBinding="{Binding Album}"
+                                Width="384"/>
+                        <GridViewColumn Header="Track"
+                                DisplayMemberBinding="{Binding Track}"
+                                Width="128"/>
+                        <GridViewColumn Header="Length"
+                                DisplayMemberBinding="{Binding Length}"
+                                Width="110"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </ScrollViewer>
     </DockPanel>
 </Window>
