@@ -6,7 +6,7 @@
 
 2. To configure whether or not you will create a Debug build or a Release build click the dropdown labeled `Debug` and select your requisite option.
 
-3. To build the project, go to Build -> Build Solution, or press F7.
+3. To build the project, go to Build -> Build Solution, or press F7. Visual Studio should attempt to pull the project dependencies for this application automatically. If this does not happen, then you can go into the application's file manually and run `dotnet restore` to restore application dependencies.
 
 4. To run your build, you can go to Debug -> Start Debugging, or press F5. The application will start automatically.
 
