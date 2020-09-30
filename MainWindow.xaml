@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="Orpheus"
         Width="1280"
@@ -36,9 +38,61 @@
                 <MenuItem Header="_Exit" Command="Close" InputGestureText="Ctrl+W" />
             </MenuItem>
         </Menu>
+        <Grid DockPanel.Dock="Bottom" Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="32" />
+            </Grid.ColumnDefinitions>
+            <!--  The following binding commands are not yet implemented and are intended to be completed in a different feature. -->
+            <!--  I went ahead and stubbed out the features for the file window to make it easier to complete for feature 2 above. -->
+            <Button Grid.Column="0" Width="32" Height="32" Command="{Binding RewindToStartCommand}">
+                <fa:ImageAwesome Icon="Backward" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="1" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
+                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
+                <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="3" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
+                <fa:ImageAwesome Icon="Forward" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="5" Width="32" Height="32" Command="{Binding ShuffleCommand}">
+                <fa:ImageAwesome Icon="Random" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLenght, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction Command="{Binding TrackControlMouseUpCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+            <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume, Mode=TwoWay}" x:Name="VolumeControl" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ValueChanged">
+                        <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+        </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
             <ListView HorizontalAlignment="Stretch"
-                VerticalAlignment="Top" Width="1280"
+                VerticalAlignment="Top"
                 Name="Playlist">
                 <ListView.View>
                     <GridView>
