@@ -74,6 +74,10 @@ namespace Orpheus
         public MainWindow()
         {
             InitializeComponent();
+            //Build a new JSONHandler object that will take care of the JSON interactions  - Isaac
+            JSONHandler handler = new JSONHandler();
+            //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
+            SongList ListOfSongs = handler.ReadJsonFile();
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)

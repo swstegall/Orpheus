@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "Songs": [
+        {
+          "Song Name": "Fake Your Death",
+          "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+        },
+        {
+          "Song Name": "Fake Your Death",
+          "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+        }
+      ]
+    }
+  ],
+  "required": [
+    "Songs"
+  ],
+  "properties": {
+    "Songs": {
+      "$id": "#/properties/Songs",
+      "type": "array",
+      "title": "The Songs schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": [],
+      "examples": [
+        [
+          {
+            "Song Name": "Fake Your Death",
+            "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+          },
+          {
+            "Song Name": "Fake Your Death",
+            "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+          }
+        ]
+      ],
+      "additionalItems": true,
+      "items": {
+        "$id": "#/properties/Songs/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/Songs/items/anyOf/0",
+            "type": "object",
+            "title": "The first anyOf schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+              {
+                "Song Name": "Fake Your Death",
+                "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+              }
+            ],
+            "required": [
+              "Song Name",
+              "File Path"
+            ],
+            "properties": {
+              "Song Name": {
+                "$id": "#/properties/Songs/items/anyOf/0/properties/Song%20Name",
+                "type": "string",
+                "title": "The Song Name schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "Fake Your Death"
+                ]
+              },
+              "File Path": {
+                "$id": "#/properties/Songs/items/anyOf/0/properties/File%20Path",
+                "type": "string",
+                "title": "The File Path schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                  "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": true
+}
