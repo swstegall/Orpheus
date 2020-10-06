@@ -73,6 +73,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Song.cs" />
+    <Compile Include="SongList.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JSONHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,7 +108,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="music_storage_schema.json" />
-    <None Include="muisc_storage.json" />
+    <None Include="music_storage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -125,7 +130,7 @@
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties music_3storage_3schema_1json__JsonSchema="https://json-schema.org/draft-04/schema" muisc_3storage_1json__JsonSchema="music_storage_schema.json" />
+      <UserProperties music_3storage_3schema_1json__JsonSchema="https://json-schema.org/draft-04/schema" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
