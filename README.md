@@ -31,3 +31,23 @@
 #### Changed
 
 - Changed README.md file to reflect these changes.
+
+### Feature 2
+
+#### Added
+
+- JSON schema file: music_storage_schema.json
+
+-JSON file music_storage.json
+
+-Class SongLocation to store the title and path of a SongLocation. This is used when deserializing music_storage.json and reflects a json object.
+
+-Class SongList to store a list of song. This is used when deserializing music_storage.json and is the root level of the file.
+
+-Class JSONHandler which will handle alll interactions with music_storage.json. The method in it is ReadJsonFile() which reads music_storage.json is found and returns the list of songs in a SongList object.
+
+#### Changed
+
+-Creation of a JSONHandler object in MainWindow.xaml.cs MainWindow() method and a call to ReadJsonFile() to retrieve the stored songs.
+
+- Changed README.md file to reflect these additions and changes.
