@@ -10,6 +10,7 @@ namespace Orpheus {
         //All variables in this class need a JsonProperty attribute - Isaac
         //This is because the variables here are present and ordered exactly like the objects in music_storeage.json which is necessary for deserialization - Isaac
 
+        //Id is the unique Id for this SongLocation object - Isaac
         [JsonProperty("Id")]
         public int Id { get; set; }
 

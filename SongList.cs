@@ -20,18 +20,27 @@ namespace Orpheus {
         [JsonProperty("Songs")]
         public List<SongLocation> List {get; set;}
 
+        //This will open the file selection window to allow a user to select a music file - Isaac
+        //It will then add the song choice to List and return a bool that states if a song was added  - Isaac
         public bool AddSongLocation() {
+            //Bool to return  - Isaac
             bool AddedPath = false;
+            //This will allow for the opening of the file selection and referencing the chosen file's information - Isaac
             OpenFileDialog open = new OpenFileDialog();
+            //Dispalys at the top of the file selection window - Isaac
             open.Title = "Choose Your Song";
+            //The first part is what dispalys in the file selection window and the second part is what actually restricts the file types - Isaac
             open.Filter = "Music Files (*.mp3, *.wav, *.ogg)|*.mp3;*.wav;*.ogg";
-            string FilePath ="";
-            string FileName = "";
+            //This will open the file selection window and will go in the if statement if a file was selected - Isaac
             if (open.ShowDialog() == DialogResult.OK) {
-                FilePath = open.FileName;
-                FileName = open.SafeFileName;
+                //This contains the entire file path - Isaac
+                string FilePath = open.FileName;
+                //This contains only the file name - Isaac
+                string FileName = open.SafeFileName;
+                //Goes through all of the stored Id's to get the highest one - Isaac
                 int GreatestId = List.Max(x => x.Id);
                 List.Add(new SongLocation() {
+                    //The Id is one greater than the found highest Id to ensure that the new Id is unique - Isaac
                     Id = GreatestId + 1,
                     SongName = FileName,
                     FilePath = FilePath
@@ -41,13 +50,17 @@ namespace Orpheus {
             return AddedPath;
         }
 
+        //This will remove a SongLocation object item from List based on the Id passed in as a parameter - Isaac
         public void RemoveSongLocation(int GivenId) {
+            //Finds the first instance of the SongLocation object to be removed in List - Isaac
             SongLocation ItemToRemove = (SongLocation)List.Where(x => x.Id == GivenId).FirstOrDefault();
+            //Removes the found object from List - Isaac
             List.Remove(ItemToRemove);
         }
 
+        //This will run through every file path in List to validate if it is a valid path or not - Isaac
+        //Will return a List of SongLocation objects of all the SongLocation objects with non-valid paths - Isaac
         public List<SongLocation> VerifyPaths() {
-            OpenFileDialog open = new OpenFileDialog();
             List<SongLocation> BadPaths = (List<SongLocation>)List.Where(x => File.Exists(x.FilePath) == false).ToList();
             return BadPaths;
         }
