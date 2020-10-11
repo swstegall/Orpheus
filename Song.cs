@@ -10,6 +10,9 @@ namespace Orpheus {
         //All variables in this class need a JsonProperty attribute - Isaac
         //This is because the variables here are present and ordered exactly like the objects in music_storeage.json which is necessary for deserialization - Isaac
 
+        [JsonProperty("Id")]
+        public int Id { get; set; }
+
         //Song Name is the title of the song - Isaac
         //This can technically be whatever string as it is the way the user identifies the song, not the program - Isaac
         //Example: "01 Fake Your Death.mp3" - Isaac

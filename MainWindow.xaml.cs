@@ -78,10 +78,8 @@ namespace Orpheus
             JSONHandler handler = new JSONHandler();
             //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             SongList ListOfSongs = handler.ReadJsonFile();
-            ListOfSongs.List.Add(new SongLocation() { 
-                SongName = "03 Vampires Will Never Hurt You.mp3", 
-                FilePath = @"D:\Music\My Chemical Romance\03 Vampires Will Never Hurt You.mp3" 
-            });
+            ListOfSongs.AddSongLocation();
+            ListOfSongs.RemoveSongLocation(2);
             handler.WriteToJSONFile(ListOfSongs);
         }
 
