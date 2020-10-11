@@ -32,5 +32,22 @@ namespace Orpheus {
             return MusicFromJSON;
         }
 
+        public void WriteToJSONFile(SongList ListToWrite) {
+            try {
+                //Builds the path based on the location of the application in the current user's directory  - Isaac
+                //If the path is incorrect in testing on your machine let me know and I will try someting different - Isaac
+                string path = Path.Combine(Environment.CurrentDirectory, @"music_storage.json");
+                string ConvertedString = JsonConvert.SerializeObject(ListToWrite);
+                using (var writer = new StreamWriter(path)) {
+                    writer.Write(ConvertedString);
+                }
+                //Deserializes the text from the file using Newtonsoft's tool - Isaac
+            }
+            catch (Exception ex) {
+                //Initializes the object to be returned to a empty variable if the file could not be found - Isaac
+            }
+        }
+
     }
+
 }
