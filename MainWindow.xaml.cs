@@ -76,8 +76,24 @@ namespace Orpheus
             InitializeComponent();
             //Build a new JSONHandler object that will take care of the JSON interactions  - Isaac
             JSONHandler handler = new JSONHandler();
+
             //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             SongList ListOfSongs = handler.ReadJsonFile();
+
+            //Calling this will open the file selection window to choose a song from the users machine - Isaac
+            //Will add the new song to the SongList object - Isaac
+            //ListOfSongs.AddSongLocation();
+
+            //Calling this will remove a specified song from the SongList object - Isaac
+            //Just pass in the Id of the SongLocation object to be removed - Isaac
+            //ListOfSongs.RemoveSongLocation(2);
+
+            //This will write everything in the passed in SongList object to the JSON file - Isaac
+            handler.WriteToJSONFile(ListOfSongs);
+
+            //Calling .VerifyPaths() will go through every path stored in the SongList object and return a list of SongLocations - Isaac
+            //The returned list contains all of the SongLocation objects with bad paths - Isaac
+            List<SongLocation> BadPaths = ListOfSongs.VerifyPaths();
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
