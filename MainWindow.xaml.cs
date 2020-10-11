@@ -81,6 +81,7 @@ namespace Orpheus
             ListOfSongs.AddSongLocation();
             ListOfSongs.RemoveSongLocation(2);
             handler.WriteToJSONFile(ListOfSongs);
+            List<SongLocation> BadPaths = ListOfSongs.VerifyPaths();
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
