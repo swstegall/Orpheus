@@ -71,10 +71,20 @@ namespace Orpheus
                 this.listOfSongs.RemoveSongLocation(song.Id);
             });
 
+            Playlist.Items.Clear();
+
+            this.listOfSongs.List.ForEach(song =>
+            {
+                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+            });
+
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
         }
 
+        // Still doesn't completely work in clearing out and then adding files to the playlist.
+        // Changes currently are only reflected on relaunch of the application.
+        // May not be too big of an issue if we go the route of just marking an invalid song with red text. - Sam
         private void OpenFileCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             //Calling this will open the file selection window to choose a song from the users machine - Isaac
@@ -90,11 +100,6 @@ namespace Orpheus
 
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
-        }
-
-        private void OpenFolderCmdExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("TODO: Add folder to library.", "Orpheus", MessageBoxButton.OK);
         }
 
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
