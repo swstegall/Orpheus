@@ -37,8 +37,12 @@ namespace Orpheus {
                 string FilePath = open.FileName;
                 //This contains only the file name - Isaac
                 string FileName = open.SafeFileName;
-                //Goes through all of the stored Id's to get the highest one - Isaac
-                int GreatestId = List.Max(x => x.Id);
+                int GreatestId = 0;
+                if (List.Count > 0)
+                {
+                    //Goes through all of the stored Id's to get the highest one - Isaac
+                    GreatestId = List.Max(x => x.Id);
+                }
                 List.Add(new SongLocation() {
                     //The Id is one greater than the found highest Id to ensure that the new Id is unique - Isaac
                     Id = GreatestId + 1,

@@ -35,75 +35,61 @@ namespace Orpheus
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
 
+        //Build a new JSONHandler object that will take care of the JSON interactions  - Isaac
+        JSONHandler handler;
+
+        //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
+        SongList listOfSongs;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Playlist.Items.Add(new Song() { Name = "Only the Young", Artist = "Journey", Album = "Greatest Hits", Track = 1, Length = "4:17" });
-            Playlist.Items.Add(new Song() { Name = "Don't Stop Believin", Artist = "Journey", Album = "Greatest Hits", Track = 2, Length = "4:10" });
-            Playlist.Items.Add(new Song() { Name = "Wheel in the Sky", Artist = "Journey", Album = "Greatest Hits", Track = 3, Length = "4:12" });
-            Playlist.Items.Add(new Song() { Name = "Faithfully", Artist = "Journey", Album = "Greatest Hits", Track = 4, Length = "4:27" });
-            Playlist.Items.Add(new Song() { Name = "I'll Be Alright Without You", Artist = "Journey", Album = "Greatest Hits", Track = 5, Length = "4:50" });
-            Playlist.Items.Add(new Song() { Name = "Any Way You Want It", Artist = "Journey", Album = "Greatest Hits", Track = 6, Length = "3:21" });
-            Playlist.Items.Add(new Song() { Name = "Ask the Lonely", Artist = "Journey", Album = "Greatest Hits", Track = 7, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Who's Crying Now?", Artist = "Journey", Album = "Greatest Hits", Track = 8, Length = "5:00" });
-            Playlist.Items.Add(new Song() { Name = "Separate Ways (Worlds Apart)", Artist = "Journey", Album = "Greatest Hits", Track = 9, Length = "5:24" });
-            Playlist.Items.Add(new Song() { Name = "Lights", Artist = "Journey", Album = "Greatest Hits", Track = 10, Length = "3:10" });
-            Playlist.Items.Add(new Song() { Name = "Lovin', Touchin' Squeezin'", Artist = "Journey", Album = "Greatest Hits", Track = 11, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Open Arms", Artist = "Journey", Album = "Greatest Hits", Track = 12, Length = "3:23" });
-            Playlist.Items.Add(new Song() { Name = "Girl Can't Help It", Artist = "Journey", Album = "Greatest Hits", Track = 13, Length = "3:50" });
-            Playlist.Items.Add(new Song() { Name = "Send Her My Love", Artist = "Journey", Album = "Greatest Hits", Track = 14, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Be Good to Yourself", Artist = "Journey", Album = "Greatest Hits", Track = 15, Length = "3:51" });
-            Playlist.Items.Add(new Song() { Name = "When You Love a Woman", Artist = "Journey", Album = "Greatest Hits", Track = 16, Length = "4:07" });
-            Playlist.Items.Add(new Song() { Name = "Only the Young", Artist = "Journey", Album = "Greatest Hits", Track = 1, Length = "4:17" });
-            Playlist.Items.Add(new Song() { Name = "Don't Stop Believin", Artist = "Journey", Album = "Greatest Hits", Track = 2, Length = "4:10" });
-            Playlist.Items.Add(new Song() { Name = "Wheel in the Sky", Artist = "Journey", Album = "Greatest Hits", Track = 3, Length = "4:12" });
-            Playlist.Items.Add(new Song() { Name = "Faithfully", Artist = "Journey", Album = "Greatest Hits", Track = 4, Length = "4:27" });
-            Playlist.Items.Add(new Song() { Name = "I'll Be Alright Without You", Artist = "Journey", Album = "Greatest Hits", Track = 5, Length = "4:50" });
-            Playlist.Items.Add(new Song() { Name = "Any Way You Want It", Artist = "Journey", Album = "Greatest Hits", Track = 6, Length = "3:21" });
-            Playlist.Items.Add(new Song() { Name = "Ask the Lonely", Artist = "Journey", Album = "Greatest Hits", Track = 7, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Who's Crying Now?", Artist = "Journey", Album = "Greatest Hits", Track = 8, Length = "5:00" });
-            Playlist.Items.Add(new Song() { Name = "Separate Ways (Worlds Apart)", Artist = "Journey", Album = "Greatest Hits", Track = 9, Length = "5:24" });
-            Playlist.Items.Add(new Song() { Name = "Lights", Artist = "Journey", Album = "Greatest Hits", Track = 10, Length = "3:10" });
-            Playlist.Items.Add(new Song() { Name = "Lovin', Touchin' Squeezin'", Artist = "Journey", Album = "Greatest Hits", Track = 11, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Open Arms", Artist = "Journey", Album = "Greatest Hits", Track = 12, Length = "3:23" });
-            Playlist.Items.Add(new Song() { Name = "Girl Can't Help It", Artist = "Journey", Album = "Greatest Hits", Track = 13, Length = "3:50" });
-            Playlist.Items.Add(new Song() { Name = "Send Her My Love", Artist = "Journey", Album = "Greatest Hits", Track = 14, Length = "3:54" });
-            Playlist.Items.Add(new Song() { Name = "Be Good to Yourself", Artist = "Journey", Album = "Greatest Hits", Track = 15, Length = "3:51" });
-            Playlist.Items.Add(new Song() { Name = "When You Love a Woman", Artist = "Journey", Album = "Greatest Hits", Track = 16, Length = "4:07" });
+            this.listOfSongs.List.ForEach(song =>
+            {
+                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+            });
         }
 
         public MainWindow()
         {
             InitializeComponent();
-            //Build a new JSONHandler object that will take care of the JSON interactions  - Isaac
-            JSONHandler handler = new JSONHandler();
 
-            //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
-            SongList ListOfSongs = handler.ReadJsonFile();
+            this.handler = new JSONHandler();
 
-            //Calling this will open the file selection window to choose a song from the users machine - Isaac
-            //Will add the new song to the SongList object - Isaac
-            //ListOfSongs.AddSongLocation();
-
-            //Calling this will remove a specified song from the SongList object - Isaac
-            //Just pass in the Id of the SongLocation object to be removed - Isaac
-            //ListOfSongs.RemoveSongLocation(2);
-
-            //This will write everything in the passed in SongList object to the JSON file - Isaac
-            handler.WriteToJSONFile(ListOfSongs);
-
-            //Calling .VerifyPaths() will go through every path stored in the SongList object and return a list of SongLocations - Isaac
-            //The returned list contains all of the SongLocation objects with bad paths - Isaac
-            List<SongLocation> BadPaths = ListOfSongs.VerifyPaths();
+            this.listOfSongs = this.handler.ReadJsonFile();
+            Console.WriteLine(this.listOfSongs.List);
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("TODO: Scan library for changes.", "Orpheus", MessageBoxButton.OK);
+            //Calling .VerifyPaths() will go through every path stored in the SongList object and return a list of SongLocations - Isaac
+            //The returned list contains all of the SongLocation objects with bad paths - Isaac
+            List<SongLocation> badPaths = this.listOfSongs.VerifyPaths();
+
+            //Remove all the bad paths from the JSON file.
+            badPaths.ForEach(song =>
+            {
+                this.listOfSongs.RemoveSongLocation(song.Id);
+            });
+
+            //This will write everything in the passed in SongList object to the JSON file - Isaac
+            this.handler.WriteToJSONFile(this.listOfSongs);
         }
 
         private void OpenFileCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("TODO: Add file to library.", "Orpheus", MessageBoxButton.OK);
+            //Calling this will open the file selection window to choose a song from the users machine - Isaac
+            //Will add the new song to the SongList object - Isaac
+            this.listOfSongs.AddSongLocation();
+
+            Playlist.Items.Clear();
+
+            this.listOfSongs.List.ForEach(song =>
+            {
+                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+            });
+
+            //This will write everything in the passed in SongList object to the JSON file - Isaac
+            this.handler.WriteToJSONFile(this.listOfSongs);
         }
 
         private void OpenFolderCmdExecuted(object sender, ExecutedRoutedEventArgs e)
