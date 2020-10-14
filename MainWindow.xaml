@@ -18,6 +18,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.ScanCmd}" Executed="ScanCmdExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenFileCmd}" Executed="OpenFileCmdExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.StopPlaybackCmd}" Executed="StopPlaybackCmdExecuted" />
         <CommandBinding Command="Close" Executed="CloseCmdExecuted" />
     </Window.CommandBindings>
     <Window.InputBindings>
@@ -52,7 +53,7 @@
             <Button Grid.Column="1" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
                 <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
+            <Button Grid.Column="2" Width="32" Height="32" Command="{x:Static local:MainWindow.StopPlaybackCmd}">
                 <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
             <Button Grid.Column="3" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
@@ -69,7 +70,7 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLenght, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLength, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
@@ -91,6 +92,11 @@
             <ListView HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Name="Playlist">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="SongRowDoubleClick"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"

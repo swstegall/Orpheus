@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -34,6 +36,8 @@ namespace Orpheus
         public static RoutedCommand ScanCmd = new RoutedCommand();
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
+        public static RoutedCommand StopPlaybackCmd = new RoutedCommand();
+        public WaveOutEvent waveOut;
 
         //JSONHandler object that will take care of the JSON interactions  - Isaac
         JSONHandler handler;
@@ -56,7 +60,7 @@ namespace Orpheus
             this.handler = new JSONHandler();
             //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             this.listOfSongs = this.handler.ReadJsonFile();
-            Console.WriteLine(this.listOfSongs.List);
+            this.waveOut = new WaveOutEvent();
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -87,6 +91,7 @@ namespace Orpheus
         // May not be too big of an issue if we go the route of just marking an invalid song with red text. - Sam
         private void OpenFileCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            this.waveOut.Stop();
             //Calling this will open the file selection window to choose a song from the users machine - Isaac
             //Will add the new song to the SongList object - Isaac
             this.listOfSongs.AddSongLocation();
@@ -98,8 +103,30 @@ namespace Orpheus
                 Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
             });
 
+            // var musicReader = new MediaFoundationReader(this.listOfSongs.List[this.listOfSongs.List.Count - 1].FilePath);
+            // waveOut.Init(musicReader);
+            // waveOut.Play();
+
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
+        }
+
+        void SongRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as Song;
+            if (item != null)
+            {
+                var song = this.listOfSongs.List.Find(x => x.SongName == item.Name);
+                var musicReader = new MediaFoundationReader(song.FilePath);
+                waveOut.Stop();
+                waveOut.Init(musicReader);
+                waveOut.Play();
+            }
+        }
+
+        void StopPlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            waveOut.Stop();
         }
 
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
