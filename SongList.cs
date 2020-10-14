@@ -37,10 +37,12 @@ namespace Orpheus {
                 string FilePath = open.FileName;
                 //This contains only the file name - Isaac
                 string FileName = open.SafeFileName;
+                //Initialize the new Id to zero - Isaac
                 int GreatestId = 0;
+                //If there aren't any SongLocation items in the list then it keeps the default Id of zero - Isaac
                 if (List.Count > 0)
                 {
-                    //Goes through all of the stored Id's to get the highest one - Isaac
+                    //If there are SongLocation items in the list then it goes through all of the stored Id's to get the highest one - Isaac
                     GreatestId = List.Max(x => x.Id);
                 }
                 List.Add(new SongLocation() {
@@ -66,6 +68,7 @@ namespace Orpheus {
         //Will return a List of SongLocation objects of all the SongLocation objects with non-valid paths - Isaac
         public List<SongLocation> VerifyPaths() {
             List<SongLocation> BadPaths = (List<SongLocation>)List.Where(x => File.Exists(x.FilePath) == false).ToList();
+            List.ForEach(x => { if (File.Exists(x.FilePath) == false) { x.BrokenPath = true; } });
             return BadPaths;
         }
 

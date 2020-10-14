@@ -11,17 +11,20 @@
         {
           "Id": 1,
           "Song Name": "01 Fake Your Death.mp3",
-          "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+          "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3",
+          "Broken Path": false
         },
         {
           "Id": 2,
           "Song Name": "12 Famous Last Words.mp3",
-          "File Path": "D:\\Music\\My Chemical Romance\\12 Fake Your Death.mp3"
+          "File Path": "D:\\Music\\My Chemical Romance\\12 Fake Your Death.mp3",
+          "Broken Path": false
         },
         {
           "Id": 3,
           "Song Name": "03 Killer Queen.mp3",
-          "File Path": "D:\\Music\\Queen\\03 Killer Queen.mp3"
+          "File Path": "D:\\Music\\Queen\\03 Killer Queen.mp3",
+          "Broken Path": false
         }
       ]
     }
@@ -41,12 +44,14 @@
           {
             "Id": 1,
             "Song Name": "01 Fake Your Death.mp3",
-            "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+            "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3",
+            "Broken Path": false
           },
           {
             "Id": 2,
             "Song Name": "12 Famous Last Words.mp3",
-            "File Path": "D:\\Music\\My Chemical Romance\\12 Fake Your Death.mp3"
+            "File Path": "D:\\Music\\My Chemical Romance\\12 Fake Your Death.mp3",
+            "Broken Path": false
           }
         ]
       ],
@@ -64,13 +69,15 @@
               {
                 "Id": 1,
                 "Song Name": "01 Fake Your Death.mp3",
-                "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+                "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3",
+                "Broken Path": false
               }
             ],
             "required": [
               "Id",
               "Song Name",
-              "File Path"
+              "File Path",
+              "Broken Path"
             ],
             "properties": {
               "Id": {
@@ -101,6 +108,16 @@
                 "default": "",
                 "examples": [
                   "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+                ]
+              },
+              "Broken Path": {
+                "$id": "#/properties/Songs/items/anyOf/0/properties/Broken%20Path",
+                "type": "boolean",
+                "title": "The Broken Path schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": false,
+                "examples": [
+                  false
                 ]
               }
             },

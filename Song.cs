@@ -26,5 +26,8 @@ namespace Orpheus {
         [JsonProperty("File Path")]
         public string FilePath { get; set; }
 
+        [JsonProperty("Broken Path")]
+        public bool BrokenPath { get; set; }
+
     }
 }
