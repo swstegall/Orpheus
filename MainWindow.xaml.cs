@@ -35,10 +35,10 @@ namespace Orpheus
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
 
-        //Build a new JSONHandler object that will take care of the JSON interactions  - Isaac
+        //JSONHandler object that will take care of the JSON interactions  - Isaac
         JSONHandler handler;
 
-        //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
+        //List of songs from the JSON file  - Isaac
         SongList listOfSongs;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -52,9 +52,9 @@ namespace Orpheus
         public MainWindow()
         {
             InitializeComponent();
-
+            //Builds a new JSONHandler object that will take care of the JSON interactions  - Isaac
             this.handler = new JSONHandler();
-
+            //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             this.listOfSongs = this.handler.ReadJsonFile();
             Console.WriteLine(this.listOfSongs.List);
         }
