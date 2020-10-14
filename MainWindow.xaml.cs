@@ -37,6 +37,7 @@ namespace Orpheus
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
         public static RoutedCommand StopPlaybackCmd = new RoutedCommand();
+        public static RoutedCommand PlayPausePlaybackCmd = new RoutedCommand();
         public WaveOutEvent waveOut;
 
         //JSONHandler object that will take care of the JSON interactions  - Isaac
@@ -127,6 +128,25 @@ namespace Orpheus
         void StopPlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             waveOut.Stop();
+        }
+
+        void PlayPausePlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (waveOut != null)
+            {
+                if (waveOut.PlaybackState == PlaybackState.Playing)
+                {
+                    waveOut.Pause();
+                }
+                else
+                {
+                    waveOut.Play();
+                }
+            }
+            else
+            {
+                waveOut.Play();
+            }
         }
 
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
