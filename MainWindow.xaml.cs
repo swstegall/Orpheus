@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,12 +18,12 @@ using System.Windows.Shapes;
 
 class Song
 {
-    public string Name { get; set; }
-    
+    public string Title { get; set; }
     public string Artist { get; set; }
     public string Album { get; set; }
     public int Track { get; set; }
-    public string Length { get; set; }
+
+    public string Name { get; set; }
 }
 
 namespace Orpheus
@@ -34,6 +36,10 @@ namespace Orpheus
         public static RoutedCommand ScanCmd = new RoutedCommand();
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
+        public static RoutedCommand StopPlaybackCmd = new RoutedCommand();
+        public static RoutedCommand PlayPausePlaybackCmd = new RoutedCommand();
+        public WaveOutEvent waveOut;
+        public bool initialized;
 
         //JSONHandler object that will take care of the JSON interactions  - Isaac
         JSONHandler handler;
@@ -45,7 +51,7 @@ namespace Orpheus
         {
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
         }
 
@@ -56,7 +62,7 @@ namespace Orpheus
             this.handler = new JSONHandler();
             //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             this.listOfSongs = this.handler.ReadJsonFile();
-            Console.WriteLine(this.listOfSongs.List);
+            this.waveOut = new WaveOutEvent();
         }
 
         private void ScanCmdExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -75,7 +81,7 @@ namespace Orpheus
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
 
             //This will write everything in the passed in SongList object to the JSON file - Isaac
@@ -87,6 +93,7 @@ namespace Orpheus
         // May not be too big of an issue if we go the route of just marking an invalid song with red text. - Sam
         private void OpenFileCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            this.waveOut.Stop();
             //Calling this will open the file selection window to choose a song from the users machine - Isaac
             //Will add the new song to the SongList object - Isaac
             this.listOfSongs.AddSongLocation();
@@ -95,11 +102,50 @@ namespace Orpheus
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
 
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
+        }
+
+        void SongRowDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as Song;
+            if (item != null)
+            {
+                var song = this.listOfSongs.List.Find(x => x.SongName == item.Name);
+                var musicReader = new MediaFoundationReader(song.FilePath);
+                this.initialized = true;
+                waveOut.Stop();
+                waveOut.Init(musicReader);
+                waveOut.Play();
+            }
+        }
+
+        void StopPlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            waveOut.Stop();
+            waveOut.Dispose();
+            this.initialized = false;
+        }
+
+        void PlayPausePlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (waveOut != null)
+            {
+                if (waveOut.PlaybackState == PlaybackState.Playing)
+                {
+                    waveOut.Pause();
+                }
+                else
+                {
+                    if (this.initialized)
+                    {
+                        waveOut.Play();
+                    }
+                }
+            }
         }
 
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
