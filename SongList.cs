@@ -40,6 +40,7 @@ namespace Orpheus {
                 //Initialize the new Id to zero - Isaac
                 int GreatestId = 0;
 
+                // Used this package to grab metadata and pass it to the SongList instance - Sam
                 TagLib.File tagFile = TagLib.File.Create(FilePath);
                 string artist = "";
                 if (tagFile.Tag.Performers.Length > 0)

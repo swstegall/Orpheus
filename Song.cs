@@ -29,15 +29,19 @@ namespace Orpheus {
         [JsonProperty("Broken Path")]
         public bool BrokenPath { get; set; }
 
+        // Added trackers for metadata so this info is available on application load to the frontend - Sam
         [JsonProperty("Artist")]
         public string Artist { get; set; }
 
+        // Added trackers for metadata so this info is available on application load to the frontend - Sam
         [JsonProperty("Album")]
         public string Album { get; set; }
 
+        // Added trackers for metadata so this info is available on application load to the frontend - Sam
         [JsonProperty("Title")]
         public string Title { get; set; }
 
+        // Added trackers for metadata so this info is available on application load to the frontend - Sam
         [JsonProperty("Track")]
         public int Track { get; set; }
     }

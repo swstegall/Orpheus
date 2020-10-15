@@ -33,12 +33,15 @@ namespace Orpheus
     /// </summary>
     public partial class MainWindow : Window
     {
+        // These are class members used for routing commands, as well as the core NAudio object. - Sam
         public static RoutedCommand ScanCmd = new RoutedCommand();
         public static RoutedCommand OpenFileCmd = new RoutedCommand();
         public static RoutedCommand OpenFolderCmd = new RoutedCommand();
         public static RoutedCommand StopPlaybackCmd = new RoutedCommand();
         public static RoutedCommand PlayPausePlaybackCmd = new RoutedCommand();
         public WaveOutEvent waveOut;
+
+        // We track whether NAudio is properly initialized to prevent crashing on Play/Stop/Pause errors - Sam
         public bool initialized;
 
         //JSONHandler object that will take care of the JSON interactions  - Isaac
@@ -47,6 +50,7 @@ namespace Orpheus
         //List of songs from the JSON file  - Isaac
         SongList listOfSongs;
 
+        // This will load songs from the JSON file when the application is cold-loaded - Sam
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.listOfSongs.List.ForEach(song =>
@@ -55,6 +59,7 @@ namespace Orpheus
             });
         }
 
+        // Main window initializes with existing songs shown by the music_storage.json file. - Sam
         public MainWindow()
         {
             InitializeComponent();
@@ -62,6 +67,8 @@ namespace Orpheus
             this.handler = new JSONHandler();
             //Returns the list of songs from the JSON file or an empty SongList object if none existed or it failed  - Isaac
             this.listOfSongs = this.handler.ReadJsonFile();
+
+            // Here, NAudio is initialized. - Sam
             this.waveOut = new WaveOutEvent();
         }
 
@@ -77,6 +84,7 @@ namespace Orpheus
                 this.listOfSongs.RemoveSongLocation(song.Id);
             });
 
+            // Playlist is refreshed when scan is executed - Sam
             Playlist.Items.Clear();
 
             this.listOfSongs.List.ForEach(song =>
@@ -98,6 +106,7 @@ namespace Orpheus
             //Will add the new song to the SongList object - Isaac
             this.listOfSongs.AddSongLocation();
 
+            // Playlist is refreshed when a new song is added - Sam
             Playlist.Items.Clear();
 
             this.listOfSongs.List.ForEach(song =>
@@ -109,6 +118,7 @@ namespace Orpheus
             this.handler.WriteToJSONFile(this.listOfSongs);
         }
 
+        // Callback to play a song on double click - Sam
         void SongRowDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = ((FrameworkElement)e.OriginalSource).DataContext as Song;
@@ -123,6 +133,7 @@ namespace Orpheus
             }
         }
 
+        // Stops a song's playback completely and changes tracked NAudio initialized state - Sam
         void StopPlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             waveOut.Stop();
@@ -130,6 +141,7 @@ namespace Orpheus
             this.initialized = false;
         }
 
+        // Play/Pause callback that uses NAudio initialized tracking to prevent a crash in a Stop -> Play event - Sam
         void PlayPausePlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (waveOut != null)
@@ -148,6 +160,7 @@ namespace Orpheus
             }
         }
 
+        // Closes the application outright when the close or Ctrl+W is pressed - Sam
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
         {
             Close();
