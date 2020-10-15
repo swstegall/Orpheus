@@ -98,8 +98,8 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
-                                DisplayMemberBinding="{Binding Name}"
-                                Width="384"/>
+                                DisplayMemberBinding="{Binding Title}"
+                                Width="284"/>
                         <GridViewColumn Header="Artist"
                                 DisplayMemberBinding="{Binding Artist}"
                                 Width="256"/>
@@ -109,9 +109,9 @@
                         <GridViewColumn Header="Track"
                                 DisplayMemberBinding="{Binding Track}"
                                 Width="128"/>
-                        <GridViewColumn Header="Length"
-                                DisplayMemberBinding="{Binding Length}"
-                                Width="110"/>
+                        <GridViewColumn Header="File Name"
+                                DisplayMemberBinding="{Binding Name}"
+                                Width="210"/>
                     </GridView>
                 </ListView.View>
             </ListView>

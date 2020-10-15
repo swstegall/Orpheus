@@ -284,3 +284,4 @@ D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Proj
 D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\obj\Debug\Orpheus.csproj.CopyComplete
 D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\obj\Debug\Orpheus.exe
 D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\obj\Debug\Orpheus.pdb
+C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\taglib-sharp.dll

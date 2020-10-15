@@ -29,5 +29,16 @@ namespace Orpheus {
         [JsonProperty("Broken Path")]
         public bool BrokenPath { get; set; }
 
+        [JsonProperty("Artist")]
+        public string Artist { get; set; }
+
+        [JsonProperty("Album")]
+        public string Album { get; set; }
+
+        [JsonProperty("Title")]
+        public string Title { get; set; }
+
+        [JsonProperty("Track")]
+        public int Track { get; set; }
     }
 }

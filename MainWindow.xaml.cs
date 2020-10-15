@@ -18,12 +18,12 @@ using System.Windows.Shapes;
 
 class Song
 {
-    public string Name { get; set; }
-    
+    public string Title { get; set; }
     public string Artist { get; set; }
     public string Album { get; set; }
     public int Track { get; set; }
-    public string Length { get; set; }
+
+    public string Name { get; set; }
 }
 
 namespace Orpheus
@@ -50,7 +50,7 @@ namespace Orpheus
         {
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
         }
 
@@ -80,7 +80,7 @@ namespace Orpheus
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
 
             //This will write everything in the passed in SongList object to the JSON file - Isaac
@@ -101,7 +101,7 @@ namespace Orpheus
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Name = song.SongName, Artist = "Undefined", Album = "Undefined", Track = 0, Length = "99:99" });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
 
             // var musicReader = new MediaFoundationReader(this.listOfSongs.List[this.listOfSongs.List.Count - 1].FilePath);
