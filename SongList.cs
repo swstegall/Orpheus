@@ -39,6 +39,18 @@ namespace Orpheus {
                 string FileName = open.SafeFileName;
                 //Initialize the new Id to zero - Isaac
                 int GreatestId = 0;
+
+                // Used this package to grab metadata and pass it to the SongList instance - Sam
+                TagLib.File tagFile = TagLib.File.Create(FilePath);
+                string artist = "";
+                if (tagFile.Tag.Performers.Length > 0)
+                {
+                    artist = tagFile.Tag.Performers[0];
+                }
+                string album = tagFile.Tag.Album;
+                string title = tagFile.Tag.Title;
+                int track = (int)tagFile.Tag.Track;
+
                 //If there aren't any SongLocation items in the list then it keeps the default Id of zero - Isaac
                 if (List.Count > 0)
                 {
@@ -49,7 +61,11 @@ namespace Orpheus {
                     //The Id is one greater than the found highest Id to ensure that the new Id is unique - Isaac
                     Id = GreatestId + 1,
                     SongName = FileName,
-                    FilePath = FilePath
+                    FilePath = FilePath,
+                    Artist = artist,
+                    Album = album,
+                    Title = title,
+                    Track = track,
                 });
                 AddedPath = true;
             }

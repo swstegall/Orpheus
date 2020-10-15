@@ -18,6 +18,8 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.ScanCmd}" Executed="ScanCmdExecuted" />
         <CommandBinding Command="{x:Static local:MainWindow.OpenFileCmd}" Executed="OpenFileCmdExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.StopPlaybackCmd}" Executed="StopPlaybackCmdExecuted" />
+        <CommandBinding Command="{x:Static local:MainWindow.PlayPausePlaybackCmd}" Executed="PlayPausePlaybackCmdExecuted" />
         <CommandBinding Command="Close" Executed="CloseCmdExecuted" />
     </Window.CommandBindings>
     <Window.InputBindings>
@@ -39,63 +41,28 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="36" />
                 <ColumnDefinition Width="36" />
-                <ColumnDefinition Width="36" />
-                <ColumnDefinition Width="36" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
-            <!--  The following binding commands are not yet implemented and are intended to be completed in a different feature. -->
-            <!--  I went ahead and stubbed out the features for the file window to make it easier to complete for feature 2 above. -->
-            <Button Grid.Column="0" Width="32" Height="32" Command="{Binding RewindToStartCommand}">
-                <fa:ImageAwesome Icon="Backward" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            </Button>
-            <Button Grid.Column="1" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
+            <Button Grid.Column="0" Width="32" Height="32" Command="{x:Static local:MainWindow.PlayPausePlaybackCmd}">
                 <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
+            <Button Grid.Column="1" Width="32" Height="32" Command="{x:Static local:MainWindow.StopPlaybackCmd}">
                 <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="3" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
-                <fa:ImageAwesome Icon="Forward" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            </Button>
-            <Button Grid.Column="5" Width="32" Height="32" Command="{Binding ShuffleCommand}">
-                <fa:ImageAwesome Icon="Random" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            </Button>
-        </Grid>
-        <Grid DockPanel.Dock="Bottom" Margin="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLenght, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseDown">
-                        <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="PreviewMouseUp">
-                        <i:InvokeCommandAction Command="{Binding TrackControlMouseUpCommand}"></i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Slider>
-            <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume, Mode=TwoWay}" x:Name="VolumeControl" VerticalAlignment="Center">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="ValueChanged">
-                        <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Slider>
         </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
             <ListView HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Name="Playlist">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="SongRowDoubleClick"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
-                                DisplayMemberBinding="{Binding Name}"
-                                Width="384"/>
+                                DisplayMemberBinding="{Binding Title}"
+                                Width="284"/>
                         <GridViewColumn Header="Artist"
                                 DisplayMemberBinding="{Binding Artist}"
                                 Width="256"/>
@@ -105,9 +72,9 @@
                         <GridViewColumn Header="Track"
                                 DisplayMemberBinding="{Binding Track}"
                                 Width="128"/>
-                        <GridViewColumn Header="Length"
-                                DisplayMemberBinding="{Binding Length}"
-                                Width="110"/>
+                        <GridViewColumn Header="File Name"
+                                DisplayMemberBinding="{Binding Name}"
+                                Width="210"/>
                     </GridView>
                 </ListView.View>
             </ListView>
