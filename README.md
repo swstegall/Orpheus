@@ -36,18 +36,60 @@
 
 #### Added
 
-- JSON schema file: music_storage_schema.json
+- JSON schema file: `music_storage_schema.json`
 
--JSON file music_storage.json
+- JSON file `music_storage.json`
 
--Class SongLocation to store the title and path of a SongLocation. This is used when deserializing music_storage.json and reflects a json object.
+- Class `SongLocation` to store the title and path of a `SongLocation`. This is used when deserializing `music_storage.json` and reflects a JSON object.
 
--Class SongList to store a list of song. This is used when deserializing music_storage.json and is the root level of the file.
+- Class `SongList` to store a list of song. This is used when deserializing `music_storage.json` and is the root level of the file.
 
--Class JSONHandler which will handle alll interactions with music_storage.json. The method in it is ReadJsonFile() which reads music_storage.json is found and returns the list of songs in a SongList object.
+- Class `JSONHandler` which will handle all interactions with `music_storage.json`. The method in it is `ReadJsonFile()` which reads `music_storage.json` is found and returns the list of songs in a `SongList` object.
 
 #### Changed
 
--Creation of a JSONHandler object in MainWindow.xaml.cs MainWindow() method and a call to ReadJsonFile() to retrieve the stored songs.
+- Creation of a `JSONHandler` object in `MainWindow.xaml.cs` `MainWindow()` method and a call to `ReadJsonFile()` to retrieve the stored songs.
 
-- Changed README.md file to reflect these additions and changes.
+- Changed `README.md` file to reflect these additions and changes.
+
+### Feature 3
+
+#### Added
+
+- Added file menu callback to process JSON.
+
+- Added file items to the datagrid.
+
+#### Changed
+
+- JSON schema to reflect the Error object.
+
+### Feature 4
+
+#### Added
+
+- Added Core NAudio functionality.
+
+- Added music playing on double-click event.
+
+#### Removed
+
+- Removed Add Folder to Library.
+
+### Feature 5
+
+#### Added
+
+- Added metadata parsing.
+
+- Added Play and Stop button functionality.
+
+#### Changed
+
+- Datagrid column order.
+
+- Updated `README.md` to reflect these changes.
+
+#### Removed
+
+- Removed incomplete player controls.
