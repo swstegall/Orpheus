@@ -39,6 +39,7 @@ namespace Orpheus
         public static RoutedCommand StopPlaybackCmd = new RoutedCommand();
         public static RoutedCommand PlayPausePlaybackCmd = new RoutedCommand();
         public WaveOutEvent waveOut;
+        public bool initialized;
 
         //JSONHandler object that will take care of the JSON interactions  - Isaac
         JSONHandler handler;
@@ -104,10 +105,6 @@ namespace Orpheus
                 Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
             });
 
-            // var musicReader = new MediaFoundationReader(this.listOfSongs.List[this.listOfSongs.List.Count - 1].FilePath);
-            // waveOut.Init(musicReader);
-            // waveOut.Play();
-
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
         }
@@ -119,6 +116,7 @@ namespace Orpheus
             {
                 var song = this.listOfSongs.List.Find(x => x.SongName == item.Name);
                 var musicReader = new MediaFoundationReader(song.FilePath);
+                this.initialized = true;
                 waveOut.Stop();
                 waveOut.Init(musicReader);
                 waveOut.Play();
@@ -128,6 +126,8 @@ namespace Orpheus
         void StopPlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             waveOut.Stop();
+            waveOut.Dispose();
+            this.initialized = false;
         }
 
         void PlayPausePlaybackCmdExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -140,12 +140,11 @@ namespace Orpheus
                 }
                 else
                 {
-                    waveOut.Play();
+                    if (this.initialized)
+                    {
+                        waveOut.Play();
+                    }
                 }
-            }
-            else
-            {
-                waveOut.Play();
             }
         }
 
