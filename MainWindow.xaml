@@ -56,12 +56,17 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <EventSetter Event="MouseDoubleClick" Handler="SongRowDoubleClick"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Error}" Value="File not found">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
-                                DisplayMemberBinding="{Binding Title}"
+                                DisplayMemberBinding="{Binding Title}"    
                                 Width="284"/>
                         <GridViewColumn Header="Artist"
                                 DisplayMemberBinding="{Binding Artist}"

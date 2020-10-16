@@ -78,12 +78,6 @@ namespace Orpheus
             //The returned list contains all of the SongLocation objects with bad paths - Isaac
             List<SongLocation> badPaths = this.listOfSongs.VerifyPaths();
 
-            //Remove all the bad paths from the JSON file.
-            badPaths.ForEach(song =>
-            {
-                this.listOfSongs.RemoveSongLocation(song.Id);
-            });
-
             // Playlist is refreshed when scan is executed - Sam
             Playlist.Items.Clear();
 

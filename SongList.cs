@@ -82,9 +82,10 @@ namespace Orpheus {
 
         //This will run through every file path in List to validate if it is a valid path or not - Isaac
         //Will return a List of SongLocation objects of all the SongLocation objects with non-valid paths - Isaac
+        // Added the erro so when the scan happens it say file not found and it makes the text red- Armir
         public List<SongLocation> VerifyPaths() {
             List<SongLocation> BadPaths = (List<SongLocation>)List.Where(x => File.Exists(x.FilePath) == false).ToList();
-            List.ForEach(x => { if (File.Exists(x.FilePath) == false) { x.BrokenPath = true; } });
+            List.ForEach(x => { if (File.Exists(x.FilePath) == false) { x.BrokenPath = true; x.Error = "File not found"; } });
             return BadPaths;
         }
 
