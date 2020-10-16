@@ -22,8 +22,8 @@ class Song
     public string Artist { get; set; }
     public string Album { get; set; }
     public int Track { get; set; }
-
     public string Name { get; set; }
+    public string Error { get; set; }
 }
 
 namespace Orpheus
@@ -55,7 +55,7 @@ namespace Orpheus
         {
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName, Error = song.Error });
             });
         }
 
@@ -78,20 +78,13 @@ namespace Orpheus
             //The returned list contains all of the SongLocation objects with bad paths - Isaac
             List<SongLocation> badPaths = this.listOfSongs.VerifyPaths();
 
-            //Remove all the bad paths from the JSON file.
-            badPaths.ForEach(song =>
-            {
-                this.listOfSongs.RemoveSongLocation(song.Id);
-            });
-
             // Playlist is refreshed when scan is executed - Sam
             Playlist.Items.Clear();
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName , Error = song.Error});
             });
-
             //This will write everything in the passed in SongList object to the JSON file - Isaac
             this.handler.WriteToJSONFile(this.listOfSongs);
         }
@@ -111,7 +104,7 @@ namespace Orpheus
 
             this.listOfSongs.List.ForEach(song =>
             {
-                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName });
+                Playlist.Items.Add(new Song() { Title = song.Title, Artist = song.Artist, Album = song.Album, Track = song.Track, Name = song.SongName, Error = song.Error});
             });
 
             //This will write everything in the passed in SongList object to the JSON file - Isaac
@@ -159,7 +152,6 @@ namespace Orpheus
                 }
             }
         }
-
         // Closes the application outright when the close or Ctrl+W is pressed - Sam
         private void CloseCmdExecuted(object sender, RoutedEventArgs e)
         {

@@ -44,5 +44,9 @@ namespace Orpheus {
         // Added trackers for metadata so this info is available on application load to the frontend - Sam
         [JsonProperty("Track")]
         public int Track { get; set; }
+
+        //Getting the error on the file after scanning - Armir
+        [JsonProperty("Error")]
+        public string Error { get; set; }
     }
 }

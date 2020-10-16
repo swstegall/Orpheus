@@ -1,5 +1,4 @@
-{
-  "$schema": "http://json-schema.org/draft-07/schema",
+{"$schema": "http://json-schema.org/draft-07/schema",
   "$id": "http://example.com/example.json",
   "type": "object",
   "title": "The root schema",
@@ -59,70 +58,70 @@
       "items": {
         "$id": "#/properties/Songs/items",
         "anyOf": [
-          {
-            "$id": "#/properties/Songs/items/anyOf/0",
-            "type": "object",
-            "title": "The first anyOf schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": {},
-            "examples": [
-              {
-                "Id": 1,
-                "Song Name": "01 Fake Your Death.mp3",
-                "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3",
-                "Broken Path": false
-              }
-            ],
-            "required": [
-              "Id",
-              "Song Name",
-              "File Path",
-              "Broken Path"
-            ],
-            "properties": {
-              "Id": {
-                "$id": "#/properties/Songs/items/anyOf/0/properties/Id",
-                "type": "integer",
-                "title": "The Id schema",
+            {
+                "$id": "#/properties/Songs/items/anyOf/0",
+                "type": "object",
+                "title": "The first anyOf schema",
                 "description": "An explanation about the purpose of this instance.",
-                "default": 0,
+                "default": {},
                 "examples": [
-                  1
-                ]
-              },
-              "Song Name": {
-                "$id": "#/properties/Songs/items/anyOf/0/properties/Song%20Name",
-                "type": "string",
-                "title": "The Song Name schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": "",
-                "examples": [
-                  "01 Fake Your Death.mp3"
-                ]
-              },
-              "File Path": {
-                "$id": "#/properties/Songs/items/anyOf/0/properties/File%20Path",
-                "type": "string",
-                "title": "The File Path schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": "",
-                "examples": [
-                  "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
-                ]
-              },
-              "Broken Path": {
-                "$id": "#/properties/Songs/items/anyOf/0/properties/Broken%20Path",
-                "type": "boolean",
-                "title": "The Broken Path schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": false,
-                "examples": [
-                  false
-                ]
-              }
-            },
-            "additionalProperties": true
-          }
+                    {
+                        "Id": 1,
+                        "Song Name": "01 Fake Your Death.mp3",
+                        "File Path": "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3",
+                        "Broken Path": false
+                    }
+                ],
+                "required": [
+                    "Id",
+                    "Song Name",
+                    "File Path",
+                    "Broken Path"
+                ],
+                "properties": {
+                    "Id": {
+                        "$id": "#/properties/Songs/items/anyOf/0/properties/Id",
+                        "type": "integer",
+                        "title": "The Id schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": 0,
+                        "examples": [
+                            1
+                        ]
+                    },
+                    "Song Name": {
+                        "$id": "#/properties/Songs/items/anyOf/0/properties/Song%20Name",
+                        "type": "string",
+                        "title": "The Song Name schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "01 Fake Your Death.mp3"
+                        ]
+                    },
+                    "File Path": {
+                        "$id": "#/properties/Songs/items/anyOf/0/properties/File%20Path",
+                        "type": "string",
+                        "title": "The File Path schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "D:\\Music\\My Chemical Romance\\01 Fake Your Death.mp3"
+                        ]
+                    },
+                    "Broken Path": {
+                        "$id": "#/properties/Songs/items/anyOf/0/properties/Broken%20Path",
+                        "type": "boolean",
+                        "title": "The Broken Path schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": false,
+                        "examples": [
+                            false
+                        ]
+                    },
+                    "additionalProperties": true
+                }
+            }
         ]
       }
     }
