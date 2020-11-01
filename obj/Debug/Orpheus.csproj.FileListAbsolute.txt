@@ -139,7 +139,6 @@ C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\System.Xml.XmlDocument.dl
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\System.Xml.XmlSerializer.dll
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\System.Xml.XPath.dll
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\System.Xml.XPath.XDocument.dll
-C:\Users\swste\Documents\Programming\Orpheus\obj\Debug\Orpheus.csprojAssemblyReference.cache
 C:\Users\swste\Documents\Programming\Orpheus\obj\Debug\Orpheus.exe.config
 D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\bin\Debug\music_storage.json
 D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\bin\Debug\Orpheus.exe.config
@@ -429,3 +428,7 @@ C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.Core
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.CopyComplete
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.exe
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.pdb
+C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.xml
+C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
