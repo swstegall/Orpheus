@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Orpheus"
         mc:Ignorable="d"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         ui:WindowHelper.UseModernWindowStyle="True"
@@ -14,16 +12,21 @@
         Width="1280"
         Height="720"
         ResizeMode="NoResize">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
+    </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Save Playlist" Command="{Binding SavePlaylistCommand}"/>
-                <MenuItem Header="Load Playlist" Command="{Binding LoadPlaylistCommand}"/>
-                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}"/>
-            </MenuItem>
-            <MenuItem Header="Media">
-                <MenuItem Header="Add File to Playlist..." Command="{Binding AddFileToPlaylistCommand}"/>
-                <MenuItem Header="Add Folder to Playlist..." Command="{Binding AddFolderToPlaylistCommand}"/>
+                <MenuItem Header="Add File to Playlist" Command="{Binding AddFileToPlaylistCommand}" InputGestureText="Ctrl+F"/>
+                <MenuItem Header="Add Folder to Playlist" Command="{Binding AddFolderToPlaylistCommand}" InputGestureText="Ctrl+D"/>
+                <Separator />
+                <MenuItem Header="Scan library for changes" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
+                <Separator />
+                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" InputGestureText="Ctrl+W"/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Bottom" Height="30">
@@ -90,6 +93,15 @@
                 Name="Playlist"
                 ItemsSource="{Binding Playlist}"
                 SelectedItem="{Binding CurrentlySelectedTrack, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"

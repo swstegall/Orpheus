@@ -1,9 +1,9 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Orpheus.Views
@@ -15,6 +15,8 @@ namespace Orpheus.Views
         private double _currentTrackPosition;
         private string _playPauseImageSource;
         private float _currentVolume;
+        private JSONHandler _jsonHandler;
+        private SongList _jsonSongList;
 
         private ObservableCollection<Song> _playlist;
         private Song _currentlyPlayingTrack;
@@ -118,16 +120,17 @@ namespace Orpheus.Views
         }
 
         public ICommand ExitApplicationCommand { get; set; }
-        public ICommand AddFileToPlaylistCommand { get; set; }
-        public ICommand AddFolderToPlaylistCommand { get; set; }
-        public ICommand SavePlaylistCommand { get; set; }
-        public ICommand LoadPlaylistCommand { get; set; }
+        public ICommand AddFileCommand { get; set; }
+        public ICommand AddFolderCommand { get; set; }
+        public ICommand ScanLibraryCommand { get; set; }
 
         public ICommand RewindToStartCommand { get; set; }
         public ICommand StartPlaybackCommand { get; set; }
         public ICommand StopPlaybackCommand { get; set; }
         public ICommand ForwardToEndCommand { get; set; }
         public ICommand ShuffleCommand { get; set; }
+
+        public ICommand RowDoubleClickCommand { get; set; }
 
         public ICommand TrackControlMouseDownCommand { get; set; }
         public ICommand TrackControlMouseUpCommand { get; set; }
@@ -141,9 +144,15 @@ namespace Orpheus.Views
 
             Title = "Orpheus";
 
-            LoadCommands();
-
+            _jsonHandler = new JSONHandler();
+            _jsonSongList = this._jsonHandler.ReadJsonFile();
             Playlist = new ObservableCollection<Song>();
+            _jsonSongList.List.ForEach(song =>
+            {
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            LoadCommands();
 
             _playbackState = PlaybackState.Stopped;
 
@@ -163,10 +172,9 @@ namespace Orpheus.Views
         {
             // Menu commands
             ExitApplicationCommand = new RelayCommand(ExitApplication, CanExitApplication);
-            AddFileToPlaylistCommand = new RelayCommand(AddFileToPlaylist, CanAddFileToPlaylist);
-            AddFolderToPlaylistCommand = new RelayCommand(AddFolderToPlaylist, CanAddFolderToPlaylist);
-            SavePlaylistCommand = new RelayCommand(SavePlaylist, CanSavePlaylist);
-            LoadPlaylistCommand = new RelayCommand(LoadPlaylist, CanLoadPlaylist);
+            AddFileCommand = new RelayCommand(AddFile, CanAddFile);
+            AddFolderCommand = new RelayCommand(AddFolder, CanAddFolder);
+            ScanLibraryCommand = new RelayCommand(ScanLibrary, CanScanLibrary);
 
             // Player commands
             RewindToStartCommand = new RelayCommand(RewindToStart, CanRewindToStart);
@@ -196,19 +204,21 @@ namespace Orpheus.Views
             return true;
         }
 
-        private void AddFileToPlaylist(object p)
+        private void AddFile(object p)
         {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Title = "Choose Your Song";
-            open.Filter = "Music Files (*.mp3, *.wav, *.ogg)|*.mp3;*.wav;*.ogg";
-            if (open.ShowDialog() == DialogResult.OK)
+            this._jsonSongList.AddSongLocation();
+
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
             {
-                TagLib.File tagFile = TagLib.File.Create(open.FileName);
-                Playlist.Add(new Song(tagFile.Name, tagFile.Tag.Title, tagFile.Tag.Performers[0], tagFile.Tag.Album, (int)tagFile.Tag.Track, ""));
-            }
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
         }
 
-        private bool CanAddFileToPlaylist(object p)
+        private bool CanAddFile(object p)
         {
             if (_playbackState == PlaybackState.Stopped)
             {
@@ -217,7 +227,7 @@ namespace Orpheus.Views
             return false;
         }
 
-        private void AddFolderToPlaylist(object p)
+        private void AddFolder(object p)
         {
             var cofd = new CommonOpenFileDialog();
             cofd.IsFolderPicker = true;
@@ -238,7 +248,7 @@ namespace Orpheus.Views
             }
         }
 
-        private bool CanAddFolderToPlaylist(object p)
+        private bool CanAddFolder(object p)
         {
             if (_playbackState == PlaybackState.Stopped)
             {
@@ -247,37 +257,26 @@ namespace Orpheus.Views
             return false;
         }
 
-        private void SavePlaylist(object p)
+        private void ScanLibrary(object p)
         {
-            var sfd = new SaveFileDialog();
-            sfd.CreatePrompt = false;
-            sfd.OverwritePrompt = true;
-            sfd.Filter = "PLAYLIST files (*.playlist) | *.playlist";
-            if (sfd.ShowDialog() == DialogResult.OK)
+            List<SongLocation> badPaths = this._jsonSongList.VerifyPaths();
+
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
             {
-                // var ps = new PlaylistSaver();
-                // ps.Save(Playlist, sfd.FileName); // save the playlist
-            }
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
         }
 
-        private bool CanSavePlaylist(object p)
+        private bool CanScanLibrary(object p)
         {
-            return true;
-        }
-
-        private void LoadPlaylist(object p)
-        {
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "PLAYLIST files (*.playlist) | *.playlist";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (_playbackState == PlaybackState.Stopped)
             {
-                // Playlist = new PlaylistLoader().Load(ofd.FileName).ToObservableCollection(); // load the playlist
+                return true;
             }
-        }
-
-        private bool CanLoadPlaylist(object p)
-        {
-            return true;
+            return false;
         }
 
         // Player commands
@@ -331,6 +330,7 @@ namespace Orpheus.Views
                 _audioPlayer.Stop();
             }
         }
+
         private bool CanStopPlayback(object p)
         {
             if (_playbackState == PlaybackState.Playing || _playbackState == PlaybackState.Paused)
