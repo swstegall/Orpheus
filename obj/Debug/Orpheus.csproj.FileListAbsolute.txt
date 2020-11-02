@@ -429,3 +429,4 @@ C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.Core
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.CopyComplete
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.exe
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.pdb
+D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\bin\Debug\taglib-sharp.dll
