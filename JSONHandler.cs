@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Orpheus {
     class JSONHandler {
@@ -27,6 +22,7 @@ namespace Orpheus {
             }
             catch (Exception ex){
                 //Initializes the object to be returned to a empty variable if the file could not be found - Isaac
+                Console.WriteLine(ex);
                 MusicFromJSON = new SongList();
             }
             return MusicFromJSON;
@@ -45,6 +41,7 @@ namespace Orpheus {
                 }
             }
             catch (Exception ex) {
+                Console.WriteLine(ex);
                 //Initializes the object to be returned to a empty variable if the file could not be found - Isaac
             }
         }

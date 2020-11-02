@@ -3,61 +3,100 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Orpheus"
         mc:Ignorable="d"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Title="Orpheus"
+        Title="{Binding Title}"
         Width="1280"
         Height="720"
-        ResizeMode="NoResize"
-        Loaded="Window_Loaded">
-    <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:MainWindow.ScanCmd}" Executed="ScanCmdExecuted" />
-        <CommandBinding Command="{x:Static local:MainWindow.OpenFileCmd}" Executed="OpenFileCmdExecuted" />
-        <CommandBinding Command="{x:Static local:MainWindow.StopPlaybackCmd}" Executed="StopPlaybackCmdExecuted" />
-        <CommandBinding Command="{x:Static local:MainWindow.PlayPausePlaybackCmd}" Executed="PlayPausePlaybackCmdExecuted" />
-        <CommandBinding Command="Close" Executed="CloseCmdExecuted" />
-    </Window.CommandBindings>
+        ResizeMode="NoResize">
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="S" Command="{x:Static local:MainWindow.ScanCmd}" />
-        <KeyBinding Modifiers="Ctrl" Key="F" Command="{x:Static local:MainWindow.OpenFileCmd}" />
-        <KeyBinding Modifiers="Ctrl" Key="W" Command="Close" />
+        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Scan library for changes" Command="{x:Static local:MainWindow.ScanCmd}" InputGestureText="Ctrl+S" />
+            <MenuItem Header="File">
+                <MenuItem Header="Add File to Playlist" Command="{Binding AddFileToPlaylistCommand}" InputGestureText="Ctrl+F"/>
+                <MenuItem Header="Add Folder to Playlist" Command="{Binding AddFolderToPlaylistCommand}" InputGestureText="Ctrl+D"/>
                 <Separator />
-                <MenuItem Header="_Add file to library" Command="{x:Static local:MainWindow.OpenFileCmd}" InputGestureText="Ctrl+F" />
+                <MenuItem Header="Scan library for changes" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
                 <Separator />
-                <MenuItem Header="_Exit" Command="Close" InputGestureText="Ctrl+W" />
+                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" InputGestureText="Ctrl+W"/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Bottom" Height="30">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="36" />
-                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Width="32" Height="32" Command="{x:Static local:MainWindow.PlayPausePlaybackCmd}">
-                <fa:ImageAwesome Icon="Play" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Button Grid.Column="0" Width="32" Height="32" Command="{Binding RewindToStartCommand}">
+                <fa:ImageAwesome Icon="Backward" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="1" Width="32" Height="32" Command="{x:Static local:MainWindow.StopPlaybackCmd}">
+            <Button Grid.Column="1" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
+                <fa:ImageAwesome Icon="{Binding PlayPauseImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
                 <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
+            <Button Grid.Column="3" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
+                <fa:ImageAwesome Icon="Forward" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="5" Width="32" Height="32" Command="{Binding ShuffleCommand}">
+                <fa:ImageAwesome Icon="Random" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom" Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLength, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="PreviewMouseUp">
+                        <i:InvokeCommandAction Command="{Binding TrackControlMouseUpCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+            <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume, Mode=TwoWay}" x:Name="VolumeControl" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ValueChanged">
+                        <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Now playing: "></TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding CurrentlyPlayingTrack.title, Mode=OneWay}"/>
         </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
             <ListView HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
-                Name="Playlist">
+                Name="Playlist"
+                ItemsSource="{Binding Playlist}"
+                SelectedItem="{Binding CurrentlySelectedTrack, Mode=TwoWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <EventSetter Event="MouseDoubleClick" Handler="SongRowDoubleClick"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Error}" Value="File not found">
+                            <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
                                 <Setter Property="Foreground" Value="Red"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -66,20 +105,17 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
-                                DisplayMemberBinding="{Binding Title}"    
-                                Width="284"/>
+                                DisplayMemberBinding="{Binding Path=title, Mode=OneWay}"
+                                Width="494"/>
                         <GridViewColumn Header="Artist"
-                                DisplayMemberBinding="{Binding Artist}"
+                                DisplayMemberBinding="{Binding Path=artist, Mode=OneWay}"
                                 Width="256"/>
                         <GridViewColumn Header="Album"
-                                DisplayMemberBinding="{Binding Album}"
+                                DisplayMemberBinding="{Binding Path=album, Mode=OneWay}"
                                 Width="384"/>
                         <GridViewColumn Header="Track"
-                                DisplayMemberBinding="{Binding Track}"
+                                DisplayMemberBinding="{Binding Path=trackNumber, Mode=OneWay}"
                                 Width="128"/>
-                        <GridViewColumn Header="File Name"
-                                DisplayMemberBinding="{Binding Name}"
-                                Width="210"/>
                     </GridView>
                 </ListView.View>
             </ListView>
