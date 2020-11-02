@@ -58,7 +58,7 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLenght, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
+            <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLength, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
@@ -78,23 +78,35 @@
         </Grid>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Now playing: "></TextBlock>
-            <TextBlock Grid.Column="1" Text="{Binding CurrentlyPlayingTrack.FriendlyName, Mode=OneWay}"/>
+            <TextBlock Grid.Column="1" Text="{Binding CurrentlyPlayingTrack.title, Mode=OneWay}"/>
         </Grid>
-        <ListView x:Name="Playlist" ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentlySelectedTrack, Mode=TwoWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Path=FriendlyName, Mode=OneWay}"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
+            <ListView HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Name="Playlist"
+                ItemsSource="{Binding Playlist}"
+                SelectedItem="{Binding CurrentlySelectedTrack, Mode=TwoWay}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name"
+                                DisplayMemberBinding="{Binding Path=title, Mode=OneWay}"
+                                Width="494"/>
+                        <GridViewColumn Header="Artist"
+                                DisplayMemberBinding="{Binding Path=artist, Mode=OneWay}"
+                                Width="256"/>
+                        <GridViewColumn Header="Album"
+                                DisplayMemberBinding="{Binding Path=album, Mode=OneWay}"
+                                Width="384"/>
+                        <GridViewColumn Header="Track"
+                                DisplayMemberBinding="{Binding Path=trackNumber, Mode=OneWay}"
+                                Width="128"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
     </DockPanel>
 </Window>

@@ -1,12 +1,8 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -15,14 +11,14 @@ namespace Orpheus.Views
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private string _title;
-        private double _currentTrackLenght;
+        private double _currentTrackLength;
         private double _currentTrackPosition;
         private string _playPauseImageSource;
         private float _currentVolume;
 
-        private ObservableCollection<Track> _playlist;
-        private Track _currentlyPlayingTrack;
-        private Track _currentlySelectedTrack;
+        private ObservableCollection<Song> _playlist;
+        private Song _currentlyPlayingTrack;
+        private Song _currentlySelectedTrack;
         private AudioPlayer _audioPlayer;
 
         private enum PlaybackState
@@ -66,14 +62,14 @@ namespace Orpheus.Views
             }
         }
 
-        public double CurrentTrackLenght
+        public double CurrentTrackLength
         {
-            get { return _currentTrackLenght; }
+            get { return _currentTrackLength; }
             set
             {
-                if (value.Equals(_currentTrackLenght)) return;
-                _currentTrackLenght = value;
-                OnPropertyChanged(nameof(CurrentTrackLenght));
+                if (value.Equals(_currentTrackLength)) return;
+                _currentTrackLength = value;
+                OnPropertyChanged(nameof(CurrentTrackLength));
             }
         }
 
@@ -88,7 +84,7 @@ namespace Orpheus.Views
             }
         }
 
-        public Track CurrentlySelectedTrack
+        public Song CurrentlySelectedTrack
         {
             get { return _currentlySelectedTrack; }
             set
@@ -99,7 +95,7 @@ namespace Orpheus.Views
             }
         }
 
-        public Track CurrentlyPlayingTrack
+        public Song CurrentlyPlayingTrack
         {
             get { return _currentlyPlayingTrack; }
             set
@@ -110,7 +106,7 @@ namespace Orpheus.Views
             }
         }
 
-        public ObservableCollection<Track> Playlist
+        public ObservableCollection<Song> Playlist
         {
             get { return _playlist; }
             set
@@ -147,7 +143,7 @@ namespace Orpheus.Views
 
             LoadCommands();
 
-            Playlist = new ObservableCollection<Track>();
+            Playlist = new ObservableCollection<Song>();
 
             _playbackState = PlaybackState.Stopped;
 
@@ -207,9 +203,8 @@ namespace Orpheus.Views
             open.Filter = "Music Files (*.mp3, *.wav, *.ogg)|*.mp3;*.wav;*.ogg";
             if (open.ShowDialog() == DialogResult.OK)
             {
-                string FilePath = open.FileName;
-                TagLib.File tagFile = TagLib.File.Create(FilePath);
-                Playlist.Add(new Track(FilePath, tagFile.Tag.Title));
+                TagLib.File tagFile = TagLib.File.Create(open.FileName);
+                Playlist.Add(new Song(tagFile.Name, tagFile.Tag.Title, tagFile.Tag.Performers[0], tagFile.Tag.Album, (int)tagFile.Tag.Track, ""));
             }
         }
 
@@ -236,10 +231,10 @@ namespace Orpheus.Views
                 {
                     // var removePath = audioFile.RemovePath();
                     // var friendlyName = removePath.Remove(removePath.Length - 4);
-                    var track = new Track(audioFile, "test");
-                    Playlist.Add(track);
+                    // var track = new Track(audioFile, "test");
+                    // Playlist.Add(track);
                 }
-                Playlist = new ObservableCollection<Track>(Playlist.OrderBy(z => z.friendlyName).ToList());
+                // Playlist = new ObservableCollection<Track>(Playlist.OrderBy(z => z.friendlyName).ToList());
             }
         }
 
@@ -305,12 +300,12 @@ namespace Orpheus.Views
             {
                 if (_playbackState == PlaybackState.Stopped)
                 {
-                    _audioPlayer = new AudioPlayer(CurrentlySelectedTrack.fileName, CurrentVolume);
+                    _audioPlayer = new AudioPlayer(CurrentlySelectedTrack.filePath, CurrentVolume);
                     _audioPlayer.PlaybackStopType = AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
                     _audioPlayer.PlaybackPaused += _audioPlayer_PlaybackPaused;
                     _audioPlayer.PlaybackResumed += _audioPlayer_PlaybackResumed;
                     _audioPlayer.PlaybackStopped += _audioPlayer_PlaybackStopped;
-                    CurrentTrackLenght = _audioPlayer.GetLenghtInSeconds();
+                    CurrentTrackLength = _audioPlayer.GetLengthInSeconds();
                     CurrentlyPlayingTrack = CurrentlySelectedTrack;
                 }
                 if (CurrentlySelectedTrack == CurrentlyPlayingTrack)
@@ -350,7 +345,7 @@ namespace Orpheus.Views
             if (_audioPlayer != null)
             {
                 _audioPlayer.PlaybackStopType = AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
-                _audioPlayer.SetPosition(_audioPlayer.GetLenghtInSeconds());
+                _audioPlayer.SetPosition(_audioPlayer.GetLengthInSeconds());
             }
         }
         private bool CanForwardToEnd(object p)
@@ -438,7 +433,7 @@ namespace Orpheus.Views
 
             if (_audioPlayer.PlaybackStopType == AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile)
             {
-                // CurrentlySelectedTrack = Playlist.NextItem(CurrentlyPlayingTrack);
+                CurrentlySelectedTrack = Playlist.NextItem(CurrentlyPlayingTrack);
                 StartPlayback(null);
             }
         }

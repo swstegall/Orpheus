@@ -432,3 +432,4 @@ C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodeP
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.xml
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
+C:\Users\swste\Documents\Programming\Orpheus\obj\Debug\Orpheus.csprojAssemblyReference.cache

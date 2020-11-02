@@ -1,35 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Orpheus
+﻿namespace Orpheus
 {
     public class Song
     {
-        private string fileName { get; set; }
-        public string Title { get; set; }
-        public string Artist { get; set; }
-        public string Album { get; set; }
-        public int Track { get; set; }
-        public string Name { get; set; }
-        public string Error { get; set; }
+        public string filePath { get; set; }
+        public string title { get; set; }
+        public string artist { get; set; }
+        public string album { get; set; }
+        public int trackNumber { get; set; }
+        public string error { get; set; }
 
-        public Song(string fileName)
+        public Song(string filePath, string title, string artist, string album, int trackNumber, string error)
         {
-            this.fileName = fileName;
-        }
-
-        public Song(string fileName, string Title, string Artist, string Album, int Track, string Name, string Error)
-        {
-            this.fileName = fileName;
-            this.Title = Title;
-            this.Artist = Artist;
-            this.Album = Album;
-            this.Track = Track;
-            this.Name = Name;
-            this.Error = Error;
+            this.filePath = filePath;
+            this.title = title;
+            this.artist = artist;
+            this.album = album;
+            this.trackNumber = trackNumber;
+            this.error = error;
         }
     }
 }

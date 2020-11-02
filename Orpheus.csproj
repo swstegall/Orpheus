@@ -94,7 +94,6 @@
     <Compile Include="Song.cs" />
     <Compile Include="SongLocation.cs" />
     <Compile Include="SongList.cs" />
-    <Compile Include="Track.cs" />
     <Compile Include="Views\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

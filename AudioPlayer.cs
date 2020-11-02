@@ -1,9 +1,5 @@
 ﻿using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Orpheus
 {
@@ -19,8 +15,6 @@ namespace Orpheus
         private AudioFileReader _audioFileReader;
 
         private DirectSoundOut _output;
-
-        private string _filepath;
 
         public event Action PlaybackResumed;
         public event Action PlaybackStopped;
@@ -123,7 +117,7 @@ namespace Orpheus
             }
         }
 
-        public double GetLenghtInSeconds()
+        public double GetLengthInSeconds()
         {
             if (_audioFileReader != null)
             {
