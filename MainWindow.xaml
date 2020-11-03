@@ -9,8 +9,8 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="{Binding Title}"
-        Width="1280"
-        Height="720">
+        Width="1200"
+        Height="800">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
