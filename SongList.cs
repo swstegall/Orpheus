@@ -28,7 +28,7 @@ namespace Orpheus {
             //This will allow for the opening of the file selection and referencing the chosen file's information - Isaac
             OpenFileDialog open = new OpenFileDialog();
             //Dispalys at the top of the file selection window - Isaac
-            open.Title = "Choose Your Song";
+            open.Title = "Choose Your Song(s)";
             //The first part is what dispalys in the file selection window and the second part is what actually restricts the file types - Isaac
             open.Filter = "Music Files (*.mp3, *.wav, *.ogg)|*.mp3;*.wav;*.ogg";
             //This will allow multiple files to be selected and returned - Isaac
@@ -43,36 +43,79 @@ namespace Orpheus {
                     string FilePath = open.FileNames[i];
                     //This contains only the file name - Isaac
                     string FileName = open.SafeFileNames[i];
-                    //Initialize the new Id to zero - Isaac
-                    int GreatestId = 0;
-                    // Used this package to grab metadata and pass it to the SongList instance - Sam
-                    TagLib.File TagFile = TagLib.File.Create(FilePath);
-                    string Artist = "";
-                    if (TagFile.Tag.Performers.Length > 0) {
-                        Artist = TagFile.Tag.Performers[0];
-                    }
-                    string Album = TagFile.Tag.Album;
-                    string Title = TagFile.Tag.Title;
-                    int Track = (int)TagFile.Tag.Track;
-                    //If there aren't any SongLocation items in the list then it keeps the default Id of zero - Isaac
-                    if (List.Count > 0) {
-                        //If there are SongLocation items in the list then it goes through all of the stored Id's to get the highest one - Isaac
-                        GreatestId = List.Max(x => x.Id);
-                    }
-                    List.Add(new SongLocation() {
-                        //The Id is one greater than the found highest Id to ensure that the new Id is unique - Isaac
-                        Id = GreatestId + 1,
-                        SongName = FileName,
-                        FilePath = FilePath,
-                        Artist = Artist,
-                        Album = Album,
-                        Title = Title,
-                        Track = Track,
-                    });
+                    AddToList(FilePath, FileName);
                     AddedPaths = true;
                 }
             }
             return AddedPaths;
+        }
+
+        public bool AddFolderOfSongs() {
+            //Bool to return  - Isaac
+            bool AddedPaths = false;
+            FolderBrowserDialog OpenFolder = new FolderBrowserDialog();
+            if (OpenFolder.ShowDialog() == DialogResult.OK) {
+                string[] FilePathsMp3 = Directory.GetFiles(OpenFolder.SelectedPath, "*.mp3");
+                string[] FilePathsWAV = Directory.GetFiles(OpenFolder.SelectedPath, "*.wav");
+                string[] FilePathsOGG = Directory.GetFiles(OpenFolder.SelectedPath, "*.ogg");
+                foreach (string CurrentFile in FilePathsMp3) {
+                    string FileName = CurrentFile;
+                    int IndexLastSlash = CurrentFile.LastIndexOf("\\");
+                    if (IndexLastSlash > 0 ) {
+                        FileName = CurrentFile.Substring(0, IndexLastSlash);
+                    }
+                    AddToList(CurrentFile, FileName);
+                    AddedPaths = true;
+                }
+                foreach (string CurrentFile in FilePathsWAV) {
+                    string FileName = CurrentFile;
+                    int IndexLastSlash = CurrentFile.LastIndexOf("\\");
+                    if (IndexLastSlash > 0) {
+                        FileName = CurrentFile.Substring(0, IndexLastSlash);
+                    }
+                    AddToList(CurrentFile, FileName);
+                    AddedPaths = true;
+                }
+                foreach (string CurrentFile in FilePathsOGG) {
+                    string FileName = CurrentFile;
+                    int IndexLastSlash = CurrentFile.LastIndexOf("\\");
+                    if (IndexLastSlash > 0) {
+                        FileName = CurrentFile.Substring(0, IndexLastSlash);
+                    }
+                    AddToList(CurrentFile, FileName);
+                    AddedPaths = true;
+                }
+            }
+            return AddedPaths;
+        }
+
+        private void AddToList(string FilePath, string FileName) {
+            //Initialize the new Id to zero - Isaac
+            int GreatestId = 0;
+            // Used this package to grab metadata and pass it to the SongList instance - Sam
+            TagLib.File TagFile = TagLib.File.Create(FilePath);
+            string Artist = "";
+            if (TagFile.Tag.Performers.Length > 0) {
+                Artist = TagFile.Tag.Performers[0];
+            }
+            string Album = TagFile.Tag.Album;
+            string Title = TagFile.Tag.Title;
+            int Track = (int)TagFile.Tag.Track;
+            //If there aren't any SongLocation items in the list then it keeps the default Id of zero - Isaac
+            if (List.Count > 0) {
+                //If there are SongLocation items in the list then it goes through all of the stored Id's to get the highest one - Isaac
+                GreatestId = List.Max(x => x.Id);
+            }
+            List.Add(new SongLocation() {
+                //The Id is one greater than the found highest Id to ensure that the new Id is unique - Isaac
+                Id = GreatestId + 1,
+                SongName = FileName,
+                FilePath = FilePath,
+                Artist = Artist,
+                Album = Album,
+                Title = Title,
+                Track = Track,
+            });
         }
 
         //This will remove a SongLocation object item from List based on the Id passed in as a parameter - Isaac
