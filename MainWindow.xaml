@@ -12,8 +12,8 @@
         Width="1280"
         Height="720">
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
-        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
     </Window.InputBindings>
@@ -101,6 +101,11 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Remove Song" Command="{Binding RemoveSongCommand}" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
