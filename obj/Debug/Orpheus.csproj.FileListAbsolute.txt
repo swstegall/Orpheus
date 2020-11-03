@@ -428,6 +428,7 @@ C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.Core
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.csproj.CopyComplete
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.exe
 C:\Users\miri-\OneDrive\Desktop\New folder\orpheus\obj\Debug\Orpheus.pdb
+<<<<<<< HEAD
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.dll
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 C:\Users\swste\Documents\Programming\Orpheus\bin\Debug\Microsoft.WindowsAPICodePack.xml
@@ -581,3 +582,6 @@ C:\Users\Rosemond\Documents\Orpheus\obj\Debug\Orpheus.csproj.CoreCompileInputs.c
 C:\Users\Rosemond\Documents\Orpheus\obj\Debug\Orpheus.csproj.CopyComplete
 C:\Users\Rosemond\Documents\Orpheus\obj\Debug\Orpheus.exe
 C:\Users\Rosemond\Documents\Orpheus\obj\Debug\Orpheus.pdb
+=======
+D:\Documents\school\college\Graduate\Fall 2020\Engineering Software I\Group Project\Reopsitory\Orpheus\bin\Debug\taglib-sharp.dll
+>>>>>>> Add_Folder
