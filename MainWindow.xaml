@@ -10,8 +10,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="{Binding Title}"
         Width="1280"
-        Height="720"
-        ResizeMode="NoResize">
+        Height="720">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
