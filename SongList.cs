@@ -20,8 +20,8 @@ namespace Orpheus {
         [JsonProperty("Songs")]
         public List<SongLocation> List {get; set;}
 
-        //This will open the file selection window to allow a user to select a music file - Isaac
-        //It will then add the song choice to List and return a bool that states if a song was added  - Isaac
+        //This will open the file selection window to allow a user to select a music file or files - Isaac
+        //It will then add the song choice or choices to List and return a bool that states if all the songs were added  - Isaac
         public bool AddSongLocation() {
             //Bool to return  - Isaac
             bool AddedPaths = false;
@@ -50,14 +50,19 @@ namespace Orpheus {
             return AddedPaths;
         }
 
+        //This will open the folder selection window to allow a user to select a folder to add all the music contents from - Isaac
+        //It will then add all the songs in the folder to List and return a bool that states if all the songs were added  - Isaac
         public bool AddFolderOfSongs() {
             //Bool to return  - Isaac
             bool AddedPaths = false;
+            //This will allow for the opening of the folder selection and referencing the chosen folder's information - Isaac
             FolderBrowserDialog OpenFolder = new FolderBrowserDialog();
             if (OpenFolder.ShowDialog() == DialogResult.OK) {
+                //These will allow for only the files of valid music types to be selected - Isaac
                 string[] FilePathsMp3 = Directory.GetFiles(OpenFolder.SelectedPath, "*.mp3");
                 string[] FilePathsWAV = Directory.GetFiles(OpenFolder.SelectedPath, "*.wav");
                 string[] FilePathsOGG = Directory.GetFiles(OpenFolder.SelectedPath, "*.ogg");
+                //This will then go through all of the found files and extract their information and then add it to List - Isaac
                 foreach (string CurrentFile in FilePathsMp3) {
                     string FileName = CurrentFile;
                     int IndexLastSlash = CurrentFile.LastIndexOf("\\");
@@ -89,6 +94,8 @@ namespace Orpheus {
             return AddedPaths;
         }
 
+
+        //This will add the passed in file information to List - Isaac
         private void AddToList(string FilePath, string FileName) {
             //Initialize the new Id to zero - Isaac
             int GreatestId = 0;
