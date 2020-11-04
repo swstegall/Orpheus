@@ -231,23 +231,16 @@ namespace Orpheus.Views
 
         private void AddFolder(object p)
         {
-            var cofd = new CommonOpenFileDialog();
-            cofd.IsFolderPicker = true;
-            var result = cofd.ShowDialog();
-            if (result == CommonFileDialogResult.Ok)
+            this._jsonSongList.AddFolderOfSongs();
+
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
             {
-                var folderName = cofd.FileName;
-                var audioFiles = Directory.EnumerateFiles(folderName, "*.*", SearchOption.AllDirectories)
-                                          .Where(f => f.EndsWith(".wav") || f.EndsWith(".mp3") || f.EndsWith(".wma") || f.EndsWith(".ogg") || f.EndsWith(".flac"));
-                foreach (var audioFile in audioFiles)
-                {
-                    // var removePath = audioFile.RemovePath();
-                    // var friendlyName = removePath.Remove(removePath.Length - 4);
-                    // var track = new Track(audioFile, "test");
-                    // Playlist.Add(track);
-                }
-                // Playlist = new ObservableCollection<Track>(Playlist.OrderBy(z => z.friendlyName).ToList());
-            }
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
         }
 
         private bool CanAddFolder(object p)
