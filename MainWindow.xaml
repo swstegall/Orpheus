@@ -20,10 +20,10 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Add File to Playlist" Command="{Binding AddFileCommand}" InputGestureText="Ctrl+F"/>
-                <MenuItem Header="Add Folder to Playlist" Command="{Binding AddFolderCommand}" InputGestureText="Ctrl+D"/>
+                <MenuItem Header="Add File" Command="{Binding AddFileCommand}" InputGestureText="Ctrl+F"/>
+                <MenuItem Header="Add Folder" Command="{Binding AddFolderCommand}" InputGestureText="Ctrl+D"/>
                 <Separator />
-                <MenuItem Header="Scan library for changes" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Scan Library" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" InputGestureText="Ctrl+W"/>
             </MenuItem>
@@ -83,7 +83,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Now playing: "></TextBlock>
+            <TextBlock Grid.Column="0" Text="Now Playing: "></TextBlock>
             <TextBlock Grid.Column="1" Text="{Binding CurrentlyPlayingTrack.title, Mode=OneWay}"/>
         </Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Height="Auto">
@@ -108,7 +108,7 @@
                 </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name"
+                        <GridViewColumn Header="Title"
                                 DisplayMemberBinding="{Binding Path=title, Mode=OneWay}"
                                 Width="494"/>
                         <GridViewColumn Header="Artist"

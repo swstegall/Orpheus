@@ -123,6 +123,7 @@ namespace Orpheus.Views
         public ICommand AddFileCommand { get; set; }
         public ICommand AddFolderCommand { get; set; }
         public ICommand ScanLibraryCommand { get; set; }
+        public ICommand RemoveSongCommand { get; set; }
 
         public ICommand RewindToStartCommand { get; set; }
         public ICommand StartPlaybackCommand { get; set; }
@@ -135,7 +136,6 @@ namespace Orpheus.Views
         public ICommand TrackControlMouseDownCommand { get; set; }
         public ICommand TrackControlMouseUpCommand { get; set; }
         public ICommand VolumeControlValueChangedCommand { get; set; }
-        public ICommand RemoveSongCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -176,6 +176,7 @@ namespace Orpheus.Views
             AddFileCommand = new RelayCommand(AddFile, CanAddFile);
             AddFolderCommand = new RelayCommand(AddFolder, CanAddFolder);
             ScanLibraryCommand = new RelayCommand(ScanLibrary, CanScanLibrary);
+            RemoveSongCommand = new RelayCommand(RemoveSong, CanRemoveSong);
 
             // Player commands
             RewindToStartCommand = new RelayCommand(RewindToStart, CanRewindToStart);
@@ -188,7 +189,6 @@ namespace Orpheus.Views
             TrackControlMouseDownCommand = new RelayCommand(TrackControlMouseDown, CanTrackControlMouseDown);
             TrackControlMouseUpCommand = new RelayCommand(TrackControlMouseUp, CanTrackControlMouseUp);
             VolumeControlValueChangedCommand = new RelayCommand(VolumeControlValueChanged, CanVolumeControlValueChanged);
-            RemoveSongCommand = new RelayCommand(RemoveSong, CanRemoveSong);
         }
 
         // Menu commands
@@ -281,10 +281,34 @@ namespace Orpheus.Views
             return false;
         }
 
+        private void RemoveSong(object p)
+        {
+            this._jsonSongList.RemoveSongLocation(_jsonSongList.List.Where(song => song.Title == CurrentlySelectedTrack.title).First().Id);
+
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
+            {
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+        }
+        private bool CanRemoveSong(object p)
+        {
+            if (_playbackState == PlaybackState.Stopped &&
+                this._jsonSongList.List.Count > 0 &&
+                Playlist.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         // Player commands
         private void RewindToStart(object p)
         {
-            _audioPlayer.SetPosition(0); // set position to zero
+            _audioPlayer.SetPosition(0);
         }
         private bool CanRewindToStart(object p)
         {
@@ -450,30 +474,6 @@ namespace Orpheus.Views
         {
             _playbackState = PlaybackState.Paused;
             PlayPauseImageSource = "Play";
-        }
-
-        private void RemoveSong(object p)
-        {
-            // Right here you need to find which song you are trying to remove.
-            this._jsonSongList.RemoveSongLocation(_jsonSongList.List.Where(song => song.Title == CurrentlySelectedTrack.title).First().Id);
-            // After you find it, remove it from this._jsonSongList.
-            // Then, the code below will refresh the frontend, and write the change to the JSON file.
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
-        }
-            private bool CanRemoveSong(object p)
-        {
-            if (_playbackState == PlaybackState.Stopped)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }
