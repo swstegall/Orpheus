@@ -12,16 +12,16 @@
         Width="1280"
         Height="720">
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileToPlaylistCommand}"/>
-        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderToPlaylistCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Add File to Playlist" Command="{Binding AddFileToPlaylistCommand}" InputGestureText="Ctrl+F"/>
-                <MenuItem Header="Add Folder to Playlist" Command="{Binding AddFolderToPlaylistCommand}" InputGestureText="Ctrl+D"/>
+                <MenuItem Header="Add File to Playlist" Command="{Binding AddFileCommand}" InputGestureText="Ctrl+F"/>
+                <MenuItem Header="Add Folder to Playlist" Command="{Binding AddFolderCommand}" InputGestureText="Ctrl+D"/>
                 <Separator />
                 <MenuItem Header="Scan library for changes" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
                 <Separator />
@@ -101,6 +101,11 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Remove Song" Command="{Binding RemoveSongCommand}" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name"
