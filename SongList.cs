@@ -48,6 +48,7 @@ namespace Orpheus {
         //This will open the folder selection window to allow a user to select a folder to add all the music contents from - Isaac
         //It will then add all the songs in the folder to List and return a bool that states if all the songs were added  - Isaac
         public bool AddFolderOfSongs() {
+            PruneInvalidSongLocations();
             //Bool to return  - Isaac
             bool AddedPaths = false;
             //This will allow for the opening of the folder selection and referencing the chosen folder's information - Isaac
@@ -135,6 +136,13 @@ namespace Orpheus {
             List<SongLocation> BadPaths = (List<SongLocation>)List.Where(x => File.Exists(x.FilePath) == false).ToList();
             List.ForEach(x => { if (File.Exists(x.FilePath) == false) { x.BrokenPath = true; x.Error = "File not found"; } });
             return BadPaths;
+        }
+
+        public void PruneInvalidSongLocations() {
+            List<SongLocation> BadPaths = (List<SongLocation>)List.Where(x => x.BrokenPath == true).ToList();
+            foreach (SongLocation path in BadPaths) {
+                List.Remove(path);
+            }
         }
 
     }
