@@ -137,5 +137,16 @@ namespace Orpheus {
             return BadPaths;
         }
 
+        //Calling this will remove all of the songlocations in List that have invalid paths - Isaac
+        //Calling to verify paths before hand is not necessary since it will do this to ensure all bad paths are removed - Isaac
+        public void PruneInvalidSongLocations() {
+            //Ensure all bad paths have been found and get all of them - Isaac
+            List<SongLocation> BadPaths = VerifyPaths();
+            //Go through each of the returned song locations and remove them from List - Isaac
+            foreach (SongLocation path in BadPaths) {
+                List.Remove(path);
+            }
+        }
+
     }
 }
