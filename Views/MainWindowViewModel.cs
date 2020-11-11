@@ -126,6 +126,7 @@ namespace Orpheus.Views
         public ICommand AddFolderCommand { get; set; }
         public ICommand ScanLibraryCommand { get; set; }
         public ICommand RemoveSongCommand { get; set; }
+        public ICommand RemapSongCommand { get; set; }
 
         public ICommand RewindToStartCommand { get; set; }
         public ICommand StartPlaybackCommand { get; set; }
@@ -181,6 +182,7 @@ namespace Orpheus.Views
             AddFolderCommand = new RelayCommand(AddFolder, CanAddFolder);
             ScanLibraryCommand = new RelayCommand(ScanLibrary, CanScanLibrary);
             RemoveSongCommand = new RelayCommand(RemoveSong, CanRemoveSong);
+            RemapSongCommand = new RelayCommand(RemapSong, CanRemapSong);
 
             // Player commands
             RewindToStartCommand = new RelayCommand(RewindToStart, CanRewindToStart);
@@ -277,6 +279,31 @@ namespace Orpheus.Views
             if (_playbackState == PlaybackState.Stopped &&
                 this._jsonSongList.List.Count > 0 &&
                 Playlist.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void RemapSong(object p)
+        {
+            this._jsonSongList.RemapSongLocation();
+
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
+            {
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+        }
+
+        private bool CanRemapSong(object p)
+        {
+            if (_playbackState == PlaybackState.Stopped &&
+            this._jsonSongList.List.Count > 0 &&
+             Playlist.Count > 0)
             {
                 return true;
             }

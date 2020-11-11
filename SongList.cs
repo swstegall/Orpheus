@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
@@ -45,8 +46,55 @@ namespace Orpheus {
             return AddedPaths;
         }
 
-        //This will open the folder selection window to allow a user to select a folder to add all the music contents from - Isaac
-        //It will then add all the songs in the folder to List and return a bool that states if all the songs were added  - Isaac
+        public bool RemapSongLocation()
+        {
+            bool AddedPaths = false;
+
+            OpenFileDialog open = new OpenFileDialog();
+            open.Title = "Choose Your Song(s)";
+            open.Filter = "Music Files (*.mp3, *.wav, *.ogg)|*.mp3;*.wav;*.ogg";
+            open.Multiselect = true;
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                int ReturnedAmount = open.FileNames.Length;
+                for (int i = 0; i < ReturnedAmount; i++)
+                {
+                    string FilePath = open.FileNames[i];
+                    string FileName = open.SafeFileNames[i];
+                    Remap(FilePath, FileName);
+                    AddedPaths = true;
+                }
+            }
+            return AddedPaths;
+        }
+        private void Remap(string FilePath, string FileName)
+        {
+            int GreatestId = 0;
+            TagLib.File TagFile = TagLib.File.Create(FilePath);
+            string Artist = "";
+            if (TagFile.Tag.Performers.Length > 0)
+            {
+                Artist = TagFile.Tag.Performers[0];
+            }
+            string Album = TagFile.Tag.Album;
+            string Title = TagFile.Tag.Title;
+            int Track = (int)TagFile.Tag.Track;
+            if (List.Count > 0)
+            {
+                GreatestId = List.Max(x => x.Id);
+            }
+            List.Remove(new SongLocation()
+            {
+                Id = GreatestId + 1,
+                SongName = FileName,
+                FilePath = FilePath,
+                Artist = Artist,
+                Album = Album,
+                Title = Title,
+                Track = Track,
+            });
+        }
+
         public bool AddFolderOfSongs() {
             //Bool to return  - Isaac
             bool AddedPaths = false;
