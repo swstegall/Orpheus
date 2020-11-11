@@ -79,12 +79,19 @@ namespace Orpheus {
             string Album = TagFile.Tag.Album;
             string Title = TagFile.Tag.Title;
             int Track = (int)TagFile.Tag.Track;
+            if (List.Count == 1)
+            {
+                List.Clear();
+            }
+            else
+            {
+                var brokenSong = List.Find(song => song.Title == Title);
+                List.RemoveAt(List.IndexOf(brokenSong));
+            }
             if (List.Count > 0)
             {
                 GreatestId = List.Max(x => x.Id);
             }
-            var brokenSong = List.Find(song => song.Title == Title);
-            List.RemoveAt(List.IndexOf(brokenSong));
             List.Add(new SongLocation()
             {
                 Id = GreatestId + 1,
