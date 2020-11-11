@@ -104,6 +104,7 @@
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Remove Song" Command="{Binding RemoveSongCommand}" />
+                        <MenuItem Header="Remap Song" Command="{Binding RemapSongCommand}" />
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>
