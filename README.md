@@ -124,6 +124,8 @@
 
 - Prune invalid files from JSON (#14).
 
+- Tie Prune Invalid Songs to the Frontend (#42).
+
 ##### Changed
 
 - Fix broken song by remapping its location with right-click context menu action (#15).
