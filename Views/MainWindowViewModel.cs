@@ -195,6 +195,18 @@ namespace Orpheus.Views
             VolumeControlValueChangedCommand = new RelayCommand(VolumeControlValueChanged, CanVolumeControlValueChanged);
         }
 
+        private void RefreshPlaylist()
+        {
+            Playlist.Clear();
+
+            this._jsonSongList.List.ForEach(song =>
+            {
+                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
+            });
+
+            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+        }
+
         // Menu commands
         private void ExitApplication(object p)
         {
@@ -213,15 +225,7 @@ namespace Orpheus.Views
         private void AddFile(object p)
         {
             this._jsonSongList.AddSongLocation();
-
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+            RefreshPlaylist();
         }
 
         private bool CanAddFile(object p)
@@ -236,15 +240,7 @@ namespace Orpheus.Views
         private void AddFolder(object p)
         {
             this._jsonSongList.AddFolderOfSongs();
-
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+            RefreshPlaylist();
         }
 
         private bool CanAddFolder(object p)
@@ -259,14 +255,7 @@ namespace Orpheus.Views
         private void ScanLibrary(object p)
         {
             List<SongLocation> badPaths = this._jsonSongList.VerifyPaths();
-
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+            RefreshPlaylist();
         }
 
         private bool CanScanLibrary(object p)
@@ -281,15 +270,7 @@ namespace Orpheus.Views
         private void RemoveSong(object p)
         {
             this._jsonSongList.RemoveSongLocation(_jsonSongList.List.Where(song => song.Title == CurrentlySelectedTrack.title).First().Id);
-
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+            RefreshPlaylist();
         }
         private bool CanRemoveSong(object p)
         {
