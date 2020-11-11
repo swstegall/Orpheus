@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,11 +11,13 @@ namespace Orpheus.Views
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private Random _rng;
         private string _title;
         private double _currentTrackLength;
         private double _currentTrackPosition;
         private string _playPauseImageSource;
         private float _currentVolume;
+        private bool _shuffling;
         private JSONHandler _jsonHandler;
         private SongList _jsonSongList;
 
@@ -57,7 +60,6 @@ namespace Orpheus.Views
             get { return _currentVolume; }
             set
             {
-
                 if (value.Equals(_currentVolume)) return;
                 _currentVolume = value;
                 OnPropertyChanged(nameof(CurrentVolume));
@@ -156,6 +158,8 @@ namespace Orpheus.Views
             LoadCommands();
 
             _playbackState = PlaybackState.Stopped;
+            _rng = new Random();
+            _shuffling = false;
 
             PlayPauseImageSource = "Play";
             CurrentVolume = 1;
@@ -378,8 +382,16 @@ namespace Orpheus.Views
 
         private void Shuffle(object p)
         {
-            Playlist = Playlist.Shuffle();
+            if (_shuffling)
+            {
+                _shuffling = false;
+            }
+            else
+            {
+                _shuffling = true;
+            }
         }
+
         private bool CanShuffle(object p)
         {
             if (_playbackState == PlaybackState.Stopped)
@@ -429,7 +441,7 @@ namespace Orpheus.Views
         {
             if (_audioPlayer != null)
             {
-                _audioPlayer.SetVolume(CurrentVolume); // set value of the slider to current volume
+                _audioPlayer.SetVolume(CurrentVolume);
             }
         }
 
@@ -452,7 +464,18 @@ namespace Orpheus.Views
 
             if (_audioPlayer.PlaybackStopType == AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile)
             {
-                CurrentlySelectedTrack = Playlist.NextItem(CurrentlyPlayingTrack);
+                if (!_shuffling)
+                {
+                    CurrentlySelectedTrack = Playlist.NextItem(CurrentlyPlayingTrack);
+                }
+                else
+                {
+                    var exclusionIndex = Playlist.IndexOf(CurrentlyPlayingTrack);
+                    int guess = _rng.Next(0, Playlist.Count);
+                    while (guess == exclusionIndex)
+                        guess = _rng.Next(0, Playlist.Count);
+                    CurrentlySelectedTrack = Playlist.ElementAt(guess);
+                }
                 StartPlayback(null);
             }
         }
