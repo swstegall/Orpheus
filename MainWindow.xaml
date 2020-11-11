@@ -15,6 +15,7 @@
         <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="I" Command="{Binding PruneInvalidSongsCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
@@ -24,6 +25,7 @@
                 <MenuItem Header="Add Folder" Command="{Binding AddFolderCommand}" InputGestureText="Ctrl+D"/>
                 <Separator />
                 <MenuItem Header="Scan Library" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Prune Invalid Songs" Command="{Binding PruneInvalidSongsCommand}" InputGestureText="Ctrl+I"/>
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" InputGestureText="Ctrl+W"/>
             </MenuItem>

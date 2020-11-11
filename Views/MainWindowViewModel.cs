@@ -125,6 +125,7 @@ namespace Orpheus.Views
         public ICommand AddFileCommand { get; set; }
         public ICommand AddFolderCommand { get; set; }
         public ICommand ScanLibraryCommand { get; set; }
+        public ICommand PruneInvalidSongsCommand { get; set; }
         public ICommand RemoveSongCommand { get; set; }
         public ICommand RemapSongCommand { get; set; }
 
@@ -183,6 +184,7 @@ namespace Orpheus.Views
             AddFileCommand = new RelayCommand(AddFile, CanAddFile);
             AddFolderCommand = new RelayCommand(AddFolder, CanAddFolder);
             ScanLibraryCommand = new RelayCommand(ScanLibrary, CanScanLibrary);
+            PruneInvalidSongsCommand = new RelayCommand(PruneInvalidSongs, CanPruneInvalidSongs);
             RemoveSongCommand = new RelayCommand(RemoveSong, CanRemoveSong);
             RemapSongCommand = new RelayCommand(RemapSong, CanRemapSong);
 
@@ -265,6 +267,23 @@ namespace Orpheus.Views
         private bool CanScanLibrary(object p)
         {
             if (_playbackState == PlaybackState.Stopped)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void PruneInvalidSongs(object p)
+        {
+            this._jsonSongList.PruneInvalidSongLocations();
+            RefreshPlaylist();
+        }
+
+        private bool CanPruneInvalidSongs(object p)
+        {
+            if (_playbackState == PlaybackState.Stopped &&
+                this._jsonSongList.List.Count > 0 &&
+                Playlist.Count > 0)
             {
                 return true;
             }
