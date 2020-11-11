@@ -1,17 +1,17 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Orpheus.Views
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private Random _rng;
+        private DispatcherTimer _timer;
         private string _title;
         private double _currentTrackLength;
         private double _currentTrackPosition;
@@ -316,6 +316,14 @@ namespace Orpheus.Views
             return false;
         }
 
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (_playbackState == PlaybackState.Playing)
+            {
+                CurrentTrackPosition = _audioPlayer.GetPositionInSeconds();
+            }
+        }
+
         private void StartPlayback(object p)
         {
             if (CurrentlySelectedTrack != null)
@@ -328,7 +336,12 @@ namespace Orpheus.Views
                     _audioPlayer.PlaybackResumed += _audioPlayer_PlaybackResumed;
                     _audioPlayer.PlaybackStopped += _audioPlayer_PlaybackStopped;
                     CurrentTrackLength = _audioPlayer.GetLengthInSeconds();
+                    CurrentTrackPosition = _audioPlayer.GetPositionInSeconds();
                     CurrentlyPlayingTrack = CurrentlySelectedTrack;
+                    _timer = new DispatcherTimer();
+                    _timer.Interval = TimeSpan.FromSeconds(0);
+                    _timer.Tick += timer_Tick;
+                    _timer.Start();
                 }
                 if (CurrentlySelectedTrack == CurrentlyPlayingTrack)
                 {
