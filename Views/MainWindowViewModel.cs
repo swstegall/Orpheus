@@ -155,6 +155,8 @@ namespace Orpheus.Views
             {
                 Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
             });
+            this._jsonSongList.VerifyPaths();
+            RefreshPlaylist();
 
             LoadCommands();
 
@@ -256,7 +258,7 @@ namespace Orpheus.Views
 
         private void ScanLibrary(object p)
         {
-            List<SongLocation> badPaths = this._jsonSongList.VerifyPaths();
+            this._jsonSongList.VerifyPaths();
             RefreshPlaylist();
         }
 
@@ -289,14 +291,7 @@ namespace Orpheus.Views
         {
             this._jsonSongList.RemapSongLocation();
 
-            Playlist.Clear();
-
-            this._jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
-
-            this._jsonHandler.WriteToJSONFile(this._jsonSongList);
+            RefreshPlaylist();
         }
 
         private bool CanRemapSong(object p)

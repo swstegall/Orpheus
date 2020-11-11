@@ -83,7 +83,9 @@ namespace Orpheus {
             {
                 GreatestId = List.Max(x => x.Id);
             }
-            List.Remove(new SongLocation()
+            var brokenSong = List.Find(song => song.Title == Title);
+            List.RemoveAt(List.IndexOf(brokenSong));
+            List.Add(new SongLocation()
             {
                 Id = GreatestId + 1,
                 SongName = FileName,
