@@ -132,6 +132,10 @@
 
 - Fix the Seekbar (#18).
 
+- Extract Playlist Refresh to its own function (#37).
+
+- Update `README.md` (#39).
+
 #### Milestone 3
 
 ##### Added
