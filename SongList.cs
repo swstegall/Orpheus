@@ -104,6 +104,8 @@ namespace Orpheus {
             });
         }
 
+        //This will open the folder selection window to allow a user to select a folder to add all the music contents from - Isaac
+        //It will then add all the songs in the folder to List and return a bool that states if all the songs were added  - Isaac
         public bool AddFolderOfSongs() {
             //Bool to return  - Isaac
             bool AddedPaths = false;
@@ -205,5 +207,29 @@ namespace Orpheus {
             }
         }
 
+        //Calling this will remove all duplicates of SongLocations and leave the first instance of n duplicates in List - Isaac
+        public void EradicateDuplicates() {
+            //List to hold items to be removed - Isaac
+            List<SongLocation> Duplicates = new List<SongLocation>();
+            //Go through each item in List - Isaac
+            List.ForEach(x => {
+                //If x is already in Duplicates then searching will result in the both instances being added to the list and both being removed in the end - Isaac
+                if (!Duplicates.Contains(x)) {
+                    //Go through each item in List for comapison to x - Isaac
+                    foreach (SongLocation CurrentSong in List) {
+                        //If FilePaths are the same then it is a possible duplicate - Isaac
+                        if (CurrentSong.FilePath == x.FilePath) {
+                            //If both have the same index then it is the same item and does not need to be marked as duplicate - Isaac
+                            if (List.IndexOf(CurrentSong) != List.IndexOf(x)) {
+                                //Add found duplicate to Duplicates to be removed and the original copy is left in List- Isaac
+                                Duplicates.Add(CurrentSong);
+                            }
+                        }
+                    }
+                }
+            });
+            //Remove all found dupliates - Isaac
+            Duplicates.ForEach(x => { List.Remove(x); });
+        }
     }
 }
