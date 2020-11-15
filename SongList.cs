@@ -207,5 +207,20 @@ namespace Orpheus {
             }
         }
 
+        public void EradicateDuplicates() {
+            List<SongLocation> Duplicates = new List<SongLocation>();
+            List.ForEach(x => {
+                if (!Duplicates.Contains(x)) {
+                    foreach (SongLocation CurrentSong in List) {
+                        if (CurrentSong.FilePath == x.FilePath) {
+                            if (List.IndexOf(CurrentSong) != List.IndexOf(x)) {
+                                Duplicates.Add(CurrentSong);
+                            }
+                        }
+                    }
+                }
+            });
+            Duplicates.ForEach(x => { List.Remove(x); });
+        }
     }
 }
