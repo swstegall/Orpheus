@@ -104,6 +104,8 @@ namespace Orpheus {
             });
         }
 
+        //This will open the folder selection window to allow a user to select a folder to add all the music contents from - Isaac
+        //It will then add all the songs in the folder to List and return a bool that states if all the songs were added  - Isaac
         public bool AddFolderOfSongs() {
             //Bool to return  - Isaac
             bool AddedPaths = false;
