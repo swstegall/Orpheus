@@ -14,7 +14,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <ComboBox Grid.Column="0" Grid.Row="0" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Name="themeSelector" SelectedItem="{Binding ComboBoxSelectedValue}">
+        <ComboBox Grid.Column="0" Grid.Row="0" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Name="themeSelector" SelectedItem="{Binding ThemeSelectedValue}">
             <ComboBoxItem>Default (Dark)</ComboBoxItem>
             <ComboBoxItem>Default (Light)</ComboBoxItem>
             <ComboBoxItem>Luna</ComboBoxItem>
@@ -28,7 +28,7 @@
             <ComboBoxItem>Hunter (Light)</ComboBoxItem>
             <ComboBoxItem>Hunter (Dark)</ComboBoxItem>
         </ComboBox>
-        <Button Grid.Column="0" Grid.Row="1" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Grid.Column="0" Grid.Row="1" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding OkaySelectedCommand}">
             Okay
         </Button>
     </Grid>

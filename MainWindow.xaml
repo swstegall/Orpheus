@@ -16,9 +16,26 @@
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding ScanLibraryCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="I" Command="{Binding PruneInvalidSongsCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="T" Command="{Binding SelectThemeCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding ExitApplicationCommand}"/>
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
+        <DockPanel.Resources>
+            <Style TargetType="{x:Type DockPanel}">
+                <Setter Property="Background" Value="{Binding Background}"/>
+                <Style.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                    </Style>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                    </Style>
+                </Style.Resources>
+            </Style>
+        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Add File" Command="{Binding AddFileCommand}" InputGestureText="Ctrl+F"/>
@@ -26,6 +43,8 @@
                 <Separator />
                 <MenuItem Header="Scan Library" Command="{Binding ScanLibraryCommand}" InputGestureText="Ctrl+S"/>
                 <MenuItem Header="Prune Invalid Songs" Command="{Binding PruneInvalidSongsCommand}" InputGestureText="Ctrl+I"/>
+                <Separator />
+                <MenuItem Header="Select Theme" Command="{Binding SelectThemeCommand}" InputGestureText="Ctrl+T"/>
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" InputGestureText="Ctrl+W"/>
             </MenuItem>
@@ -71,6 +90,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Slider Grid.Column="0" Minimum="0" Maximum="{Binding CurrentTrackLength, Mode=OneWay}" Value="{Binding CurrentTrackPosition, Mode=TwoWay}" x:Name="SeekbarControl" VerticalAlignment="Center">
+                <Slider.Resources>
+                    <SolidColorBrush x:Key="SliderSelectionBackground" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderSelectionBorder" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackground" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundDragging" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundHover" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorder" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderDisabled" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderDragging" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderHover" Color="{Binding Foreground}" />
+                </Slider.Resources>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction Command="{Binding TrackControlMouseDownCommand}"></i:InvokeCommandAction>
@@ -81,6 +112,18 @@
                 </i:Interaction.Triggers>
             </Slider>
             <Slider Grid.Column="3" Minimum="0" Maximum="1" Value="{Binding CurrentVolume, Mode=TwoWay}" x:Name="VolumeControl" VerticalAlignment="Center">
+                <Slider.Resources>
+                    <SolidColorBrush x:Key="SliderSelectionBackground" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderSelectionBorder" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackground" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundDragging" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBackgroundHover" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorder" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderDisabled" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderDragging" Color="{Binding Foreground}" />
+                    <SolidColorBrush x:Key="SliderThumbBorderHover" Color="{Binding Foreground}" />
+                </Slider.Resources>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ValueChanged">
                         <i:InvokeCommandAction Command="{Binding VolumeControlValueChangedCommand}"></i:InvokeCommandAction>
@@ -106,7 +149,7 @@
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
-                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="Foreground" Value="{Binding Warning}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

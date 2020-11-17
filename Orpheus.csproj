@@ -97,6 +97,9 @@
     <Compile Include="Song.cs" />
     <Compile Include="SongLocation.cs" />
     <Compile Include="SongList.cs" />
+    <Compile Include="ThemeWindow.xaml.cs">
+      <DependentUpon>ThemeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +113,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ThemeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JSONHandler.cs" />

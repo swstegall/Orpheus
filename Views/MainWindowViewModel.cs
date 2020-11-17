@@ -20,11 +20,15 @@ namespace Orpheus.Views
         private bool _shuffling;
         private JSONHandler _jsonHandler;
         private SongList _jsonSongList;
+        public string _background;
+        public string _foreground;
+        public string _warning;
 
         private ObservableCollection<Song> _playlist;
         private Song _currentlyPlayingTrack;
         private Song _currentlySelectedTrack;
         private AudioPlayer _audioPlayer;
+        private ThemeWindow _themeWindow;
 
         private enum PlaybackState
         {
@@ -32,6 +36,39 @@ namespace Orpheus.Views
         }
 
         private PlaybackState _playbackState;
+
+        public string Background
+        {
+            get { return _background; }
+            set
+            {
+                if (value == _background) return;
+                _background = value;
+                OnPropertyChanged(nameof(Background));
+            }
+        }
+
+        public string Foreground
+        {
+            get { return _foreground; }
+            set
+            {
+                if (value == _foreground) return;
+                _foreground = value;
+                OnPropertyChanged(nameof(Foreground));
+            }
+        }
+
+        public string Warning
+        {
+            get { return _warning; }
+            set
+            {
+                if (value == _warning) return;
+                _warning = value;
+                OnPropertyChanged(nameof(Warning));
+            }
+        }
 
         public string Title
         {
@@ -126,6 +163,7 @@ namespace Orpheus.Views
         public ICommand AddFolderCommand { get; set; }
         public ICommand ScanLibraryCommand { get; set; }
         public ICommand PruneInvalidSongsCommand { get; set; }
+        public ICommand SelectThemeCommand { get; set; }
         public ICommand RemoveSongCommand { get; set; }
         public ICommand RemapSongCommand { get; set; }
 
@@ -149,6 +187,10 @@ namespace Orpheus.Views
         {
             System.Windows.Application.Current.MainWindow.Closing += MainWindow_Closing;
 
+            _background = "White";
+            _foreground = "Black";
+            _warning = "Red";
+
             Title = "Orpheus";
 
             _jsonHandler = new JSONHandler();
@@ -165,6 +207,9 @@ namespace Orpheus.Views
 
             PlayPauseImageSource = "Play";
             CurrentVolume = 1;
+
+            _themeWindow = new ThemeWindow();
+            _themeWindow.Closed += ThemeWindowClosed;
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -183,6 +228,7 @@ namespace Orpheus.Views
             AddFolderCommand = new RelayCommand(AddFolder, CanAddFolder);
             ScanLibraryCommand = new RelayCommand(ScanLibrary, CanScanLibrary);
             PruneInvalidSongsCommand = new RelayCommand(PruneInvalidSongs, CanPruneInvalidSongs);
+            SelectThemeCommand = new RelayCommand(SelectTheme, CanSelectTheme);
             RemoveSongCommand = new RelayCommand(RemoveSong, CanRemoveSong);
             RemapSongCommand = new RelayCommand(RemapSong, CanRemapSong);
 
@@ -284,6 +330,115 @@ namespace Orpheus.Views
             if (_playbackState == PlaybackState.Stopped &&
                 this._jsonSongList.List.Count > 0 &&
                 Playlist.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void ThemeWindowClosed(object sender, EventArgs e)
+        {
+            // Event that's fired off after closing the theme window
+            // Look at https://stackoverflow.com/questions/27762220/how-can-i-pass-value-from-child-window-to-parent-window-by-combobox-wpf-and-mvv if this doesn't work.
+            var selectedValue = _themeWindow.ThemeSelectedValue;
+            switch (selectedValue)
+            {
+                case "Default (Light)":
+                {
+                    Foreground = "White";
+                    Background = "Black";
+                    Warning = "Red";
+                    break;
+                }
+                case "Luna":
+                {
+                    Foreground = "Cyan";
+                    Background = "Blue";
+                    Warning = "Green";
+                    break;
+                }
+                case "S'mores":
+                {
+                    Foreground = "Tan";
+                    Background = "Brown";
+                    Warning = "White";
+                    break;
+                }
+                case "Candyland":
+                {
+                    Foreground = "Light Blue";
+                    Background = "Pink";
+                    Warning = "Violet";
+                    break;
+                }
+                case "Halloween":
+                {
+                    Foreground = "Orange";
+                    Background = "Black";
+                    Warning = "Yellow";
+                    break;
+                }
+                case "Thanksgiving":
+                {
+                    Foreground = "Orange";
+                    Background = "Brown";
+                    Warning = "Yellow";
+                    break;
+                }
+                case "Christmas":
+                {
+                    Foreground = "Yellow";
+                    Background = "Green";
+                    Warning = "Red";
+                    break;
+                }
+                case "Reveille (Light)":
+                {
+                    Foreground = "Maroon";
+                    Background = "White";
+                    Warning = "Maroon";
+                    break;
+                }
+                case "Reveille (Dark)":
+                {
+                    Foreground = "Maroon";
+                    Background = "Grey";
+                    Warning = "Maroon";
+                    break;
+                }
+                case "Hunter (Light)":
+                {
+                    Foreground = "Black";
+                    Background = "White";
+                    Warning = "Red";
+                    break;
+                }
+                case "Hunter (Dark)":
+                {
+                    Foreground = "Black";
+                    Background = "White";
+                    Warning = "Red";
+                    break;
+                }
+                case "Default (Dark)":
+                default:
+                {
+                    Foreground = "Black";
+                    Background = "White";
+                    Warning = "Red";
+                    break;
+                }
+            }
+        }
+
+        private void SelectTheme(object p)
+        {
+            _themeWindow.Show();
+        }
+
+        private bool CanSelectTheme(object p)
+        {
+            if (_playbackState == PlaybackState.Stopped)
             {
                 return true;
             }
