@@ -1,0 +1,35 @@
+﻿<Window x:Class="Orpheus.ThemeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Orpheus"
+        mc:Ignorable="d"
+        Title="Select Theme" Height="200" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ComboBox Grid.Column="0" Grid.Row="0" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Name="themeSelector" SelectedItem="{Binding ComboBoxSelectedValue}">
+            <ComboBoxItem>Default (Dark)</ComboBoxItem>
+            <ComboBoxItem>Default (Light)</ComboBoxItem>
+            <ComboBoxItem>Luna</ComboBoxItem>
+            <ComboBoxItem>S'mores</ComboBoxItem>
+            <ComboBoxItem>Candyland</ComboBoxItem>
+            <ComboBoxItem>Halloween</ComboBoxItem>
+            <ComboBoxItem>Thanksgiving</ComboBoxItem>
+            <ComboBoxItem>Christmas</ComboBoxItem>
+            <ComboBoxItem>Reveille (Light)</ComboBoxItem>
+            <ComboBoxItem>Reveille (Dark)</ComboBoxItem>
+            <ComboBoxItem>Hunter (Light)</ComboBoxItem>
+            <ComboBoxItem>Hunter (Dark)</ComboBoxItem>
+        </ComboBox>
+        <Button Grid.Column="0" Grid.Row="1" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Okay
+        </Button>
+    </Grid>
+</Window>
