@@ -12,8 +12,10 @@ namespace Orpheus
             InitializeComponent();
         }
 
-        private void OkaySelectedCommand(object sender, SelectionChangedEventArgs e)
+        private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
+            var senderBtn = sender as ComboBoxItem;
+            ThemeSelectedValue = senderBtn.Content.ToString();
             this.Close();
         }
     }

@@ -187,8 +187,8 @@ namespace Orpheus.Views
         {
             System.Windows.Application.Current.MainWindow.Closing += MainWindow_Closing;
 
-            _background = "White";
-            _foreground = "Black";
+            _background = "#999999";
+            _foreground = "White";
             _warning = "Red";
 
             Title = "Orpheus";
@@ -207,9 +207,6 @@ namespace Orpheus.Views
 
             PlayPauseImageSource = "Play";
             CurrentVolume = 1;
-
-            _themeWindow = new ThemeWindow();
-            _themeWindow.Closed += ThemeWindowClosed;
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -338,8 +335,6 @@ namespace Orpheus.Views
 
         private void ThemeWindowClosed(object sender, EventArgs e)
         {
-            // Event that's fired off after closing the theme window
-            // Look at https://stackoverflow.com/questions/27762220/how-can-i-pass-value-from-child-window-to-parent-window-by-combobox-wpf-and-mvv if this doesn't work.
             var selectedValue = _themeWindow.ThemeSelectedValue;
             switch (selectedValue)
             {
@@ -433,6 +428,8 @@ namespace Orpheus.Views
 
         private void SelectTheme(object p)
         {
+            _themeWindow = new ThemeWindow();
+            _themeWindow.Closed += ThemeWindowClosed;
             _themeWindow.Show();
         }
 

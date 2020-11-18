@@ -5,31 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Orpheus"
         mc:Ignorable="d"
-        Title="Select Theme" Height="200" Width="400">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <ComboBox Grid.Column="0" Grid.Row="0" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Name="themeSelector" SelectedItem="{Binding ThemeSelectedValue}">
-            <ComboBoxItem>Default (Dark)</ComboBoxItem>
-            <ComboBoxItem>Default (Light)</ComboBoxItem>
-            <ComboBoxItem>Luna</ComboBoxItem>
-            <ComboBoxItem>S'mores</ComboBoxItem>
-            <ComboBoxItem>Candyland</ComboBoxItem>
-            <ComboBoxItem>Halloween</ComboBoxItem>
-            <ComboBoxItem>Thanksgiving</ComboBoxItem>
-            <ComboBoxItem>Christmas</ComboBoxItem>
-            <ComboBoxItem>Reveille (Light)</ComboBoxItem>
-            <ComboBoxItem>Reveille (Dark)</ComboBoxItem>
-            <ComboBoxItem>Hunter (Light)</ComboBoxItem>
-            <ComboBoxItem>Hunter (Dark)</ComboBoxItem>
+        Title="Select Theme" Height="200" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <ComboBox Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="themeSelector" SelectedItem="{Binding ThemeSelectedValue}" Margin="37,0,36.333,0">
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Light)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Dark)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Luna"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="S'mores"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Candyland"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Halloween"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Thanksgiving"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Christmas"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Reveille (Light)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Reveille (Dark)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Hunter (Light)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Hunter (Dark)"/>
         </ComboBox>
-        <Button Grid.Column="0" Grid.Row="1" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding OkaySelectedCommand}">
-            Okay
-        </Button>
     </Grid>
 </Window>

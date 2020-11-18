@@ -10,7 +10,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="{Binding Title}"
         Width="1280"
-        Height="720">
+        Height="720" WindowStartupLocation="CenterScreen">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="F" Command="{Binding AddFileCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="D" Command="{Binding AddFolderCommand}"/>
@@ -36,8 +36,8 @@
                 </Style.Resources>
             </Style>
         </DockPanel.Resources>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
+        <Menu DockPanel.Dock="Top" Foreground="{Binding Foreground}">
+            <MenuItem Header="File" Foreground="{Binding Foreground}">
                 <MenuItem Header="Add File" Command="{Binding AddFileCommand}" InputGestureText="Ctrl+F"/>
                 <MenuItem Header="Add Folder" Command="{Binding AddFolderCommand}" InputGestureText="Ctrl+D"/>
                 <Separator />
@@ -148,6 +148,9 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=error, Mode=TwoWay}" Value="">
+                                <Setter Property="Foreground" Value="{Binding Foreground, Mode=OneWay}"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
                                 <Setter Property="Foreground" Value="{Binding Warning}"/>
                             </DataTrigger>
@@ -162,6 +165,16 @@
                 </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="Background" Value="{Binding Background}"></Setter>
+                                <Setter Property="Foreground" Value="{Binding Foreground}"></Setter>
+                                <Setter Property="BorderBrush" Value="{x:Null}"></Setter>
+                                <Setter Property="BorderThickness" Value="0"></Setter>
+                                <Setter Property="Margin" Value="0"></Setter>
+                                <Setter Property="Padding" Value="0"></Setter>
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
                         <GridViewColumn Header="Title"
                                 DisplayMemberBinding="{Binding Path=title, Mode=OneWay}"
                                 Width="494"/>
