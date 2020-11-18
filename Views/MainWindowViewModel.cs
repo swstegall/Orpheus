@@ -151,12 +151,8 @@ namespace Orpheus.Views
 
             _jsonHandler = new JSONHandler();
             _jsonSongList = this._jsonHandler.ReadJsonFile();
-            Playlist = new ObservableCollection<Song>();
-            _jsonSongList.List.ForEach(song =>
-            {
-                Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
-            });
             this._jsonSongList.VerifyPaths();
+            Playlist = new ObservableCollection<Song>();
             RefreshPlaylist();
 
             LoadCommands();
@@ -204,7 +200,7 @@ namespace Orpheus.Views
         private void RefreshPlaylist()
         {
             Playlist.Clear();
-
+            this._jsonSongList.EradicateDuplicates();
             this._jsonSongList.List.ForEach(song =>
             {
                 Playlist.Add(new Song(song.FilePath, song.Title, song.Artist, song.Album, song.Track, song.Error));
