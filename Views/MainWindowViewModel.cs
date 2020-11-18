@@ -130,8 +130,10 @@ namespace Orpheus.Views
         public ICommand RemapSongCommand { get; set; }
 
         public ICommand RewindToStartCommand { get; set; }
+        public ICommand RewindCommand { get; set; }
         public ICommand StartPlaybackCommand { get; set; }
         public ICommand StopPlaybackCommand { get; set; }
+        public ICommand FastForwardCommand { get; set; }
         public ICommand ForwardToEndCommand { get; set; }
         public ICommand ShuffleCommand { get; set; }
 
@@ -186,8 +188,10 @@ namespace Orpheus.Views
 
             // Player commands
             RewindToStartCommand = new RelayCommand(RewindToStart, CanRewindToStart);
+            RewindCommand = new RelayCommand(Rewind, CanRewind);
             StartPlaybackCommand = new RelayCommand(StartPlayback, CanStartPlayback);
             StopPlaybackCommand = new RelayCommand(StopPlayback, CanStopPlayback);
+            FastForwardCommand = new RelayCommand(FastForward, CanFastForward);
             ForwardToEndCommand = new RelayCommand(ForwardToEnd, CanForwardToEnd);
             ShuffleCommand = new RelayCommand(Shuffle, CanShuffle);
 
@@ -334,6 +338,20 @@ namespace Orpheus.Views
             return false;
         }
 
+        private void Rewind(object p)
+        {
+            _audioPlayer.SetPosition(CurrentTrackPosition - 5.0);
+        }
+
+        private bool CanRewind(object p)
+        {
+            if (_playbackState == PlaybackState.Playing)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void timer_Tick(object sender, EventArgs e)
         {
             if (_playbackState == PlaybackState.Playing)
@@ -394,12 +412,26 @@ namespace Orpheus.Views
             return false;
         }
 
+        private void FastForward(object p)
+        {
+            _audioPlayer.SetPosition(CurrentTrackPosition + 5.0);
+        }
+
+        private bool CanFastForward(object p)
+        {
+            if (_playbackState == PlaybackState.Playing)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void ForwardToEnd(object p)
         {
             if (_audioPlayer != null)
             {
                 _audioPlayer.PlaybackStopType = AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
-                _audioPlayer.SetPosition(_audioPlayer.GetLengthInSeconds());
+                _audioPlayer.SetPosition(_audioPlayer.GetLengthInSeconds() - 0.1);
             }
         }
         private bool CanForwardToEnd(object p)
