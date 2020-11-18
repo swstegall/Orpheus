@@ -36,22 +36,30 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Width="32" Height="32" Command="{Binding RewindToStartCommand}">
+                <fa:ImageAwesome Icon="StepBackward" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="1" Width="32" Height="32" Command="{Binding RewindCommand}">
                 <fa:ImageAwesome Icon="Backward" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="1" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
+            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StartPlaybackCommand}">
                 <fa:ImageAwesome Icon="{Binding PlayPauseImageSource}" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="2" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
+            <Button Grid.Column="3" Width="32" Height="32" Command="{Binding StopPlaybackCommand}">
                 <fa:ImageAwesome Icon="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="3" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
+            <Button Grid.Column="4" Width="32" Height="32" Command="{Binding FastForwardCommand}">
                 <fa:ImageAwesome Icon="Forward" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
-            <Button Grid.Column="5" Width="32" Height="32" Command="{Binding ShuffleCommand}">
+            <Button Grid.Column="5" Width="32" Height="32" Command="{Binding ForwardToEndCommand}">
+                <fa:ImageAwesome Icon="StepForward" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button Grid.Column="7" Width="32" Height="32" Command="{Binding ShuffleCommand}">
                 <fa:ImageAwesome Icon="Random" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Button>
         </Grid>
