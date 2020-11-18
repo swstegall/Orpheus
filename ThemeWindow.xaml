@@ -10,12 +10,19 @@
         <ComboBox Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="themeSelector" SelectedItem="{Binding ThemeSelectedValue}" Margin="37,0,36.333,0">
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Light)"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Dark)"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Rose"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Luna"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="S'mores"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Candyland"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Halloween"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Thanksgiving"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Christmas"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic Gold"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic Teal"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic Plum"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Cool Grey"/>
+            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Warm Grey"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Reveille (Light)"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Reveille (Dark)"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Hunter (Light)"/>
