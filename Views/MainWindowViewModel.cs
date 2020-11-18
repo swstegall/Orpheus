@@ -415,6 +415,55 @@ namespace Orpheus.Views
                     Warning = "#C24444";
                     break;
                 }
+                case "Classic":
+                {
+                    Foreground = "#234508";
+                    Background = "#DDA0DD";
+                    Warning = "#C67676";
+                    break;
+                }
+                case "Rose":
+                {
+                    Foreground = "#234555";
+                    Background = "#C21E56";
+                    Warning = "#C67777";
+                    break;
+                }
+                case "Classic Gold":
+                {
+                    Foreground = "#234656";
+                    Background = "#8F7034";
+                    Warning = "#C67878";
+                    break;
+                }
+                case "Classic Teal":
+                {
+                    Foreground = "#234444";
+                    Background = "#038387";
+                    Warning = "#C67171";
+                    break;
+                }
+                case "Classic Plum":
+                {
+                    Foreground = "#234848";
+                    Background = "#854085";
+                    Warning = "#C67879";
+                    break;
+                }
+                case "Cool Grey":
+                {
+                    Foreground = "#233147";
+                    Background = "#737373";
+                    Warning = "#C67870";
+                    break;
+                }
+                case "Warm Grey":
+                {
+                    Foreground = "#234348";
+                    Background = "#867365";
+                    Warning = "#C57278";
+                    break;
+                }
                 case "Default (Dark)":
                 default:
                 {
