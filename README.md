@@ -120,8 +120,6 @@
 
 ##### Added
 
-- File menu option to select a theme (#16).
-
 - Prune invalid files from JSON (#14).
 
 - Tie Prune Invalid Songs to the Frontend (#42).
@@ -142,19 +140,23 @@
 
 ##### Added
 
+- File menu option to select a theme (#16).
+
 - Eradicate duplicates from the JSON and frontend (#19).
 
 - Double-click guard for broken song JSON (#20).
 
-- Setup proper theme initialization (#21).
-
 ##### Changed
+
+- Update `README.md` (#46).
 
 - Fix Fast-Forward (#22).
 
 #### Milestone 4
 
 ##### Added
+
+- Setup proper theme initialization (#21).
 
 - Save theme choice in JSON (#23).
 
