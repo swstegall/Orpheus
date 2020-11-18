@@ -188,8 +188,8 @@ namespace Orpheus.Views
             System.Windows.Application.Current.MainWindow.Closing += MainWindow_Closing;
 
             _background = "#999999";
-            _foreground = "White";
-            _warning = "Red";
+            _foreground = "#000000";
+            _warning = "#FF0000";
 
             Title = "Orpheus";
 
@@ -340,87 +340,87 @@ namespace Orpheus.Views
             {
                 case "Default (Light)":
                 {
-                    Foreground = "White";
-                    Background = "Black";
-                    Warning = "Red";
+                    Foreground = "#000000";
+                    Background = "#FFFFFF";
+                    Warning = "#FF0000";
                     break;
                 }
                 case "Luna":
                 {
-                    Foreground = "Cyan";
-                    Background = "Blue";
-                    Warning = "Green";
+                    Foreground = "#00FFFF";
+                    Background = "#0000FF";
+                    Warning = "#00FF00";
                     break;
                 }
                 case "S'mores":
                 {
-                    Foreground = "Tan";
-                    Background = "Brown";
-                    Warning = "White";
+                    Foreground = "#D2B48C";
+                    Background = "#A52A2A";
+                    Warning = "#FFFFFF";
                     break;
                 }
                 case "Candyland":
                 {
-                    Foreground = "Light Blue";
-                    Background = "Pink";
-                    Warning = "Violet";
+                    Foreground = "#ADD8E6";
+                    Background = "#FFC0CB";
+                    Warning = "#EE82EE";
                     break;
                 }
                 case "Halloween":
                 {
-                    Foreground = "Orange";
-                    Background = "Black";
-                    Warning = "Yellow";
+                    Foreground = "#FFA500";
+                    Background = "#000000";
+                    Warning = "#FFFF00";
                     break;
                 }
                 case "Thanksgiving":
                 {
-                    Foreground = "Orange";
-                    Background = "Brown";
-                    Warning = "Yellow";
+                    Foreground = "#FFA500";
+                    Background = "#A52A2A";
+                    Warning = "#FFFF00";
                     break;
                 }
                 case "Christmas":
                 {
-                    Foreground = "Yellow";
-                    Background = "Green";
-                    Warning = "Red";
+                    Foreground = "#FFFF00";
+                    Background = "#00FF00";
+                    Warning = "#FF0000";
                     break;
                 }
                 case "Reveille (Light)":
                 {
-                    Foreground = "Maroon";
-                    Background = "White";
-                    Warning = "Maroon";
+                    Foreground = "#500000";
+                    Background = "#FFFFFF";
+                    Warning = "#500000";
                     break;
                 }
                 case "Reveille (Dark)":
                 {
-                    Foreground = "Maroon";
-                    Background = "Grey";
-                    Warning = "Maroon";
+                    Foreground = "#500000";
+                    Background = "##999999";
+                    Warning = "#500000";
                     break;
                 }
                 case "Hunter (Light)":
                 {
-                    Foreground = "Black";
-                    Background = "White";
-                    Warning = "Red";
+                    Foreground = "#018744";
+                    Background = "#FFFFFF";
+                    Warning = "#C24444";
                     break;
                 }
                 case "Hunter (Dark)":
                 {
-                    Foreground = "Black";
-                    Background = "White";
-                    Warning = "Red";
+                    Foreground = "#018744";
+                    Background = "#999999";
+                    Warning = "#C24444";
                     break;
                 }
                 case "Default (Dark)":
                 default:
                 {
-                    Foreground = "Black";
-                    Background = "White";
-                    Warning = "Red";
+                    Foreground = "#FFFFFF";
+                    Background = "##999999";
+                    Warning = "#FF0000";
                     break;
                 }
             }
