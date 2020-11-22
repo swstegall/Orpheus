@@ -145,6 +145,11 @@
                 Name="Playlist"
                 ItemsSource="{Binding Playlist}"
                 SelectedItem="{Binding CurrentlySelectedTrack, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding RowDoubleClickCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -174,9 +173,7 @@ namespace Orpheus.Views
         public ICommand FastForwardCommand { get; set; }
         public ICommand ForwardToEndCommand { get; set; }
         public ICommand ShuffleCommand { get; set; }
-
         public ICommand RowDoubleClickCommand { get; set; }
-
         public ICommand TrackControlMouseDownCommand { get; set; }
         public ICommand TrackControlMouseUpCommand { get; set; }
         public ICommand VolumeControlValueChangedCommand { get; set; }
@@ -195,8 +192,8 @@ namespace Orpheus.Views
 
             _jsonHandler = new JSONHandler();
             _jsonSongList = this._jsonHandler.ReadJsonFile();
-            this._jsonSongList.VerifyPaths();
             Playlist = new ObservableCollection<Song>();
+            this._jsonSongList.VerifyPaths();
             RefreshPlaylist();
 
             LoadCommands();
@@ -237,6 +234,7 @@ namespace Orpheus.Views
             FastForwardCommand = new RelayCommand(FastForward, CanFastForward);
             ForwardToEndCommand = new RelayCommand(ForwardToEnd, CanForwardToEnd);
             ShuffleCommand = new RelayCommand(Shuffle, CanShuffle);
+            RowDoubleClickCommand = new RelayCommand(RowDoubleClick, CanRowDoubleClick);
 
             // Event commands
             TrackControlMouseDownCommand = new RelayCommand(TrackControlMouseDown, CanTrackControlMouseDown);
@@ -563,7 +561,7 @@ namespace Orpheus.Views
 
         private void StartPlayback(object p)
         {
-            if (CurrentlySelectedTrack != null)
+            if (CurrentlySelectedTrack != null && CurrentlySelectedTrack.error != "File not found")
             {
                 if (_playbackState == PlaybackState.Stopped)
                 {
@@ -657,6 +655,38 @@ namespace Orpheus.Views
         }
 
         private bool CanShuffle(object p)
+        {
+            if (_playbackState == PlaybackState.Stopped)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void RowDoubleClick(object p)
+        {
+            if (CurrentlySelectedTrack != null && CurrentlySelectedTrack.error != "File not found")
+            {
+                _audioPlayer = new AudioPlayer(CurrentlySelectedTrack.filePath, CurrentVolume);
+                _audioPlayer.PlaybackStopType = AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
+                _audioPlayer.PlaybackPaused += _audioPlayer_PlaybackPaused;
+                _audioPlayer.PlaybackResumed += _audioPlayer_PlaybackResumed;
+                _audioPlayer.PlaybackStopped += _audioPlayer_PlaybackStopped;
+                CurrentTrackLength = _audioPlayer.GetLengthInSeconds();
+                CurrentTrackPosition = _audioPlayer.GetPositionInSeconds();
+                CurrentlyPlayingTrack = CurrentlySelectedTrack;
+                _timer = new DispatcherTimer();
+                _timer.Interval = TimeSpan.FromSeconds(0);
+                _timer.Tick += timer_Tick;
+                _timer.Start();
+                if (CurrentlySelectedTrack == CurrentlyPlayingTrack)
+                {
+                    _audioPlayer.TogglePlayPause(CurrentVolume);
+                }
+            }
+        }
+
+        private bool CanRowDoubleClick(object p)
         {
             if (_playbackState == PlaybackState.Stopped)
             {
