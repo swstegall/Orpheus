@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Orpheus.Utilities;
 using System;
 using System.IO;
 
-namespace Orpheus {
+namespace Orpheus.Utilities {
     class JSONHandler {
 
         //Will read the music_storage json file and return a SongList object of all the songs in the file - Isaac

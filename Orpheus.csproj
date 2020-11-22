@@ -119,7 +119,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JSONHandler.cs" />
+    <Compile Include="Utilities\JSONHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
