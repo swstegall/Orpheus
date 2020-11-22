@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Orpheus.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
-namespace Orpheus {
+namespace Orpheus.Utilities {
     class SongList {
         //All variables in this class need a JsonProperty attribute - Isaac
         //This is because the variables here are present and ordered exactly like the objects in music_storeage.json which is necessary for deserialization - Isaac
