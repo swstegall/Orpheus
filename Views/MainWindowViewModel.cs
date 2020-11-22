@@ -192,8 +192,8 @@ namespace Orpheus.Views
 
             _jsonHandler = new JSONHandler();
             _jsonSongList = this._jsonHandler.ReadJsonFile();
-            this._jsonSongList.VerifyPaths();
             Playlist = new ObservableCollection<Song>();
+            this._jsonSongList.VerifyPaths();
             RefreshPlaylist();
 
             LoadCommands();
@@ -561,7 +561,7 @@ namespace Orpheus.Views
 
         private void StartPlayback(object p)
         {
-            if (CurrentlySelectedTrack != null)
+            if (CurrentlySelectedTrack != null && CurrentlySelectedTrack.error != "File not found")
             {
                 if (_playbackState == PlaybackState.Stopped)
                 {
@@ -665,7 +665,7 @@ namespace Orpheus.Views
 
         private void RowDoubleClick(object p)
         {
-            if (CurrentlySelectedTrack != null)
+            if (CurrentlySelectedTrack != null && CurrentlySelectedTrack.error != "File not found")
             {
                 _audioPlayer = new AudioPlayer(CurrentlySelectedTrack.filePath, CurrentVolume);
                 _audioPlayer.PlaybackStopType = AudioPlayer.PlaybackStopTypes.PlaybackStoppedReachingEndOfFile;
