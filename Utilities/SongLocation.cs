@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace Orpheus {
-    class SongLocation {
+namespace Orpheus.Utilities
+{
+    class SongLocation
+    {
         //All variables in this class need a JsonProperty attribute - Isaac
         //This is because the variables here are present and ordered exactly like the objects in music_storeage.json which is necessary for deserialization - Isaac
 

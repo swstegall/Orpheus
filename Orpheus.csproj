@@ -95,7 +95,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Utilities\Song.cs" />
-    <Compile Include="SongLocation.cs" />
+    <Compile Include="Utilities\SongLocation.cs" />
     <Compile Include="SongList.cs" />
     <Compile Include="ThemeWindow.xaml.cs">
       <DependentUpon>ThemeWindow.xaml</DependentUpon>
