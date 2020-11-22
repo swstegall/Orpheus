@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Orpheus
+namespace Orpheus.Windows
 {
     public partial class ThemeWindow : Window
     {
