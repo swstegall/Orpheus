@@ -94,6 +94,7 @@
     <Compile Include="Utilities\AudioPlayer.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\ThemeSelector.cs" />
     <Compile Include="Utilities\Song.cs" />
     <Compile Include="Utilities\SongLocation.cs" />
     <Compile Include="Utilities\SongList.cs" />
