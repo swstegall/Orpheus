@@ -1,7 +1,7 @@
 using NAudio.Wave;
 using System;
 
-namespace Orpheus
+namespace Orpheus.Utilities
 {
     class AudioPlayer
     {

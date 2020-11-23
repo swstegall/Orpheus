@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 
-namespace Orpheus
+namespace Orpheus.Utilities
 {
     public static class Extensions
     {

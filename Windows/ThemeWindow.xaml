@@ -1,9 +1,8 @@
-﻿<Window x:Class="Orpheus.ThemeWindow"
+﻿<Window x:Class="Orpheus.Windows.ThemeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Orpheus"
         mc:Ignorable="d"
         Title="Select Theme" Height="200" Width="400" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
