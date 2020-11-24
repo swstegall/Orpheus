@@ -7,10 +7,11 @@ namespace Orpheus.Utilities
     class JSONHandler
     {
         //Will read the music_storage json file and return a SongList object of all the songs in the file - Isaac
-        public SongList ReadJsonFile()
+        public JSONData ReadJsonFile()
         {
+            JSONData DataFromJSON;
             //Object to be returned - Isaac
-            SongList MusicFromJSON;
+            //SongList MusicFromJSON = new SongList();
             try
             {
                 string JSONFromFile;
@@ -22,15 +23,16 @@ namespace Orpheus.Utilities
                     JSONFromFile = reader.ReadToEnd();
                 }
                 //Deserializes the text from the file using Newtonsoft's tool - Isaac
-                MusicFromJSON = JsonConvert.DeserializeObject<SongList>(JSONFromFile);
+                DataFromJSON = JsonConvert.DeserializeObject<JSONData>(JSONFromFile);
+                //MusicFromJSON.List = DataFromJSON.SongList;
             }
             catch (Exception ex)
             {
                 //Initializes the object to be returned to a empty variable if the file could not be found - Isaac
                 Console.WriteLine(ex);
-                MusicFromJSON = new SongList();
+                DataFromJSON = new JSONData();
             }
-            return MusicFromJSON;
+            return DataFromJSON;
         }
 
         //Calling this will write the passed in SongList to the JSON file - Isaac
