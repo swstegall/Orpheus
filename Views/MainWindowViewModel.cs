@@ -194,6 +194,13 @@ namespace Orpheus.Views
 
             _jsonHandler = new JSONHandler();
             _jsonSongList = this._jsonHandler.ReadJsonFile();
+            if (this._jsonHandler.theme != "")
+            {
+                var result = new ThemeSelector().SelectTheme(this._jsonHandler.theme);
+                Foreground = result.Item1;
+                Background = result.Item2;
+                Warning = result.Item3;
+            }
             Playlist = new ObservableCollection<Song>();
             this._jsonSongList.VerifyPaths();
             RefreshPlaylist();
@@ -341,6 +348,8 @@ namespace Orpheus.Views
                 Foreground = result.Item1;
                 Background = result.Item2;
                 Warning = result.Item3;
+                this._jsonHandler.theme = _themeWindow.ThemeSelectedValue;
+                RefreshPlaylist();
             }
         }
 
