@@ -21,25 +21,11 @@
                         vals.Item3 = "#00FF00";
                         break;
                     }
-                case "S'mores":
-                    {
-                        vals.Item1 = "#D2B48C";
-                        vals.Item2 = "#A52A2A";
-                        vals.Item3 = "#FFFFFF";
-                        break;
-                    }
                 case "Candyland":
                     {
                         vals.Item1 = "#ADD8E6";
                         vals.Item2 = "#FFC0CB";
                         vals.Item3 = "#EE82EE";
-                        break;
-                    }
-                case "Halloween":
-                    {
-                        vals.Item1 = "#FFA500";
-                        vals.Item2 = "#000000";
-                        vals.Item3 = "#FFFF00";
                         break;
                     }
                 case "Thanksgiving":
@@ -89,13 +75,6 @@
                         vals.Item1 = "#234508";
                         vals.Item2 = "#DDA0DD";
                         vals.Item3 = "#C67676";
-                        break;
-                    }
-                case "Rose":
-                    {
-                        vals.Item1 = "#234555";
-                        vals.Item2 = "#C21E56";
-                        vals.Item3 = "#C67777";
                         break;
                     }
                 case "Classic Gold":
