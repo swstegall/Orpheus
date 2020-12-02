@@ -150,18 +150,6 @@
                         <i:InvokeCommandAction Command="{Binding RowDoubleClickCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="">
-                                <Setter Property="Foreground" Value="{Binding Foreground}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
-                                <Setter Property="Foreground" Value="{Binding Warning}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.ItemContainerStyle>
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Remove Song" Command="{Binding RemoveSongCommand}" />
@@ -180,18 +168,86 @@
                                 <Setter Property="Padding" Value="0"></Setter>
                             </Style>
                         </GridView.ColumnHeaderContainerStyle>
-                        <GridViewColumn Header="Title"
-                                DisplayMemberBinding="{Binding Path=title, Mode=OneWay}"
-                                Width="494"/>
-                        <GridViewColumn Header="Artist"
-                                DisplayMemberBinding="{Binding Path=artist, Mode=OneWay}"
-                                Width="256"/>
-                        <GridViewColumn Header="Album"
-                                DisplayMemberBinding="{Binding Path=album, Mode=OneWay}"
-                                Width="384"/>
-                        <GridViewColumn Header="Track"
-                                DisplayMemberBinding="{Binding Path=trackNumber, Mode=OneWay}"
-                                Width="128"/>
+                        <GridViewColumn Width="494" Header="Title">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=title, Mode=OneWay}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Artist" Width="256">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=artist, Mode=OneWay}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Album" Width="384">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=album, Mode=OneWay}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Track" Width="128">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=track, Mode=OneWay}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=error, Mode=OneWay}" Value="File not found">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

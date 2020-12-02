@@ -10,11 +10,8 @@
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Light)"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Default (Dark)"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic"/>
-            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Rose"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Luna"/>
-            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="S'mores"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Candyland"/>
-            <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Halloween"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Thanksgiving"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Christmas"/>
             <ComboBoxItem Selected="ComboBoxItem_Selected" Content="Classic Gold"/>
