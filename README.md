@@ -160,8 +160,6 @@
 
 - Save theme choice in JSON (#23).
 
-- Custom User-Created Themes (#24).
-
 ##### Changed
 
 - Fix Row Item Styling (#25).
